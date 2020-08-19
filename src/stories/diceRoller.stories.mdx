@@ -1,0 +1,9 @@
+import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { DiceRollerContainer } from '../components/diceRoller/DiceRollerContainer';
+import { DiceRollerView } from '../components/diceRoller/DiceRollerView';
+
+<Meta title="React Demos/Dice Roller" component={FluidLoader} />
+
+<Story name="Demo">
+  <FluidLoader factory={DiceRollerContainer} view={DiceRollerView} viewType="react"></FluidLoader>
+</Story>

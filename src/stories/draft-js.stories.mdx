@@ -1,0 +1,9 @@
+import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { FluidDraftJsContainer } from "../components/draft-js/container";
+import { FluidDraftJsView } from "../components/draft-js/view";
+
+<Meta title="React Demos/Draft-JS" component={FluidLoader} />
+
+<Story name="Demo">
+  <FluidLoader factory={FluidDraftJsContainer} view={FluidDraftJsView} viewType="react"></FluidLoader>
+</Story>

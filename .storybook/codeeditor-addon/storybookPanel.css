@@ -1,0 +1,13 @@
+.code-editor {
+  display: block;
+  height: 100%;
+}
+
+.code-editor-hidden {
+  display: none;
+}
+
+.code-editor iframe {
+  height: 100%;
+  width: 100%;
+}

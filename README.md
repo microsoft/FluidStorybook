@@ -1,3 +1,14 @@
+## Fluid Storybook
+
+This project provides "stories" for different Fluid examples. In addition to being able to view the sample Fluid Objects, a source code viewer is also included to make it easy to see how the Fluid Objects works.
+
+Run the following to get started:
+
+- `npm install`
+- `npm start`
+
+# Acknowledgements
+This is built using [StorybookJs](https://storybook.js.org/)
 
 # Contributing
 

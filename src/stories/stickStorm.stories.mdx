@@ -1,0 +1,9 @@
+import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { NoteroContainerFactory } from "../components/sticky-storm/container"
+import { NoteroView } from "../components/sticky-storm/view"
+
+<Meta title="React Demos/Sticky Storm" component={FluidLoader} />
+
+<Story name="Demo">
+  <FluidLoader factory={NoteroContainerFactory} view={NoteroView} viewType="react"></FluidLoader>
+</Story>

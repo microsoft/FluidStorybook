@@ -1,0 +1,17 @@
+.bp3-menu {
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.sourcePanel .bp3-control-group :nth-child(3) {
+  flex-grow: 1;
+}
+
+.sourcePanel .bp3-control-group :nth-child(3) > span {
+  width: 100%;
+}
+
+.sourcePanel .bp3-control-group :nth-child(3) button {
+  width: 100%;
+  justify-content: left;
+}

@@ -1,0 +1,22 @@
+// Needed for .storybook/sourcecode-addon .jsx to work properly when addon is loaded by main.js
+{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins": [
+        [
+          "@babel/plugin-proposal-class-properties",
+          {
+            "loose": true
+          }
+        ]
+      ]
+  }

@@ -1,0 +1,19 @@
+import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { BadgeContainerFactory } from '../components/badge/badgeModel';
+
+<Meta title="React Demos/Badge" component={FluidLoader} />
+
+# Badge Demo
+
+This example demonstrates how to create a badge data object. It allows multiple
+users to collaborate in real-time on the status of a document.
+
+Key Distributed Data Structures (DDSs) used include:
+
+* SharedMap
+* SharedCell
+* SharedObjectSequence
+
+<Story name="Demo">
+  <FluidLoader factory={BadgeContainerFactory}></FluidLoader>
+</Story>

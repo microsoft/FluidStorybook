@@ -1,0 +1,78 @@
+.sidebar-header a {
+    font-size: 9pt;
+    margin-top: 6px;
+}
+
+#root {
+    margin-top: 45px;
+}
+
+.navbar {
+    background-color: #2c2c32;
+    height: 50px;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-family: segoe ui, helvetica neue, helvetica, Arial, sans-serif;
+}
+
+.navbar .navbar-brand {
+    font-size: 20px;
+    letter-spacing: -.04rem;
+    color: #fff;
+    min-height: 50px;
+    padding-top: 3px;
+    padding-right: 12px;
+    float: left;
+    text-decoration: none;
+}
+
+.navbar nav {
+    padding-right: 15px;
+    padding-left: 25px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    padding-left: 25px;
+    padding-top: 6px;
+    color: #fff;
+    opacity: .6;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+    .navbar nav {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar nav {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar nav {
+        width: 1170px;
+    }
+}

@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="manager-styles.css">
-
 <div class="navbar">
     <div>
         <nav>
@@ -32,3 +31,18 @@
         </nav>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const website = '%STORYBOOK_WEBSITE_TARGET%';
+        // Hide header if not running in fluidframework.com
+        if (website !== 'FLUIDFRAMEWORK') {
+            const header = document.querySelector('div.navbar');
+            const root = document.querySelector('#root');
+            if (header && root) {
+                header.remove();
+                root.style.marginTop = '0px';
+            }
+        }
+    });
+</script>

@@ -3,6 +3,16 @@ import { fluidExport } from '../components/image-gallery/image-gallery';
 
 <Meta title="React Demos/Image Gallery" component={FluidLoader} />
 
+# Image Gallery
+
+This example demonstrates how to use Fluid to provide real-time collaboration
+between multiple image gallery components. As a user selects an image, other connected
+clients will automatically be updated and stay in sync.
+
+<a href="https://ashy-mud-0acebac10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed Data Structures</a> (DDSs) used include:
+
+* <a href="https://ashy-mud-0acebac10.azurestaticapps.net/apis/map/shareddirectory/" target="_blank">SharedDirectory</a>
+
 <Story name="Demo">
   <FluidLoader factory={fluidExport}></FluidLoader>
 </Story>

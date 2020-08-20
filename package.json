@@ -20,6 +20,7 @@
     "@fluidframework/datastore": "^0.25.1-873",
     "@fluidframework/driver-utils": "^0.25.1-873",
     "@fluidframework/map": "^0.25.1-873",
+    "@fluidframework/matrix": "^0.25.1-873",
     "@fluidframework/merge-tree": "0.25.1-873",
     "@fluidframework/routerlicious-driver": "^0.25.1-873",
     "@fluidframework/sequence": "^0.25.1-873",

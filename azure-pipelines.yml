@@ -3,6 +3,9 @@
 
 # FluidHelloWorld build for CI
 
+trigger:
+- main
+
 pr:
 - main
 

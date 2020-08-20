@@ -57,6 +57,7 @@ class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMat
 
         // Call 'openMatrix' to observe changes in the SharedMatrix.
         this._matrixData.openMatrix(this);
+        this.setMaxListeners(Number.MAX_SAFE_INTEGER);
     }
 
     /**

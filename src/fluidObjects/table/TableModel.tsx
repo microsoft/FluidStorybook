@@ -12,7 +12,7 @@ import {
 from "@fluidframework/aqueduct";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
 import { SharedMatrix } from "@fluidframework/matrix";
-import { IFluidHandle } from "@fluidframework/component-core-interfaces";
+import { IFluidHandle } from "@fluidframework/core-interfaces";
 import { IMatrixConsumer, IMatrixProducer } from "@tiny-calc/nano";
 import { IFluidTable } from "./interface";
 import { TableView } from "./TableView";

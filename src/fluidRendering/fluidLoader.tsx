@@ -16,7 +16,7 @@ export const FluidLoader = (props: React.PropsWithChildren<any>) => {
     useEffect(() => {
         async function render() {
             // Empty string means get the default DataObject from container
-            // You could also grab a specific component from the container using "nameOfDataObject"
+            // You could also grab a specific data object from the container using "nameOfDataObject"
             // For example in DiceRoller you could use "@fluid-example/dice-roller"
             const dataObjectName = "";
             let options: RouteOptions = { mode: "local" };

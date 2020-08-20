@@ -6,7 +6,7 @@
 import { EventEmitter } from "events";
 
 /**
- * IFluidTable describes the public API surface for the FluidTable component.
+ * IFluidTable describes the public API surface for the FluidTable data object.
  */
 export interface IFluidTable extends EventEmitter {
     /**

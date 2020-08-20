@@ -24,12 +24,12 @@ class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMat
         return this;
     }
 
-    static get ComponentName() { return "@fluid-example/Fluid Table"; }
+    static get FluidObjectName() { return "@fluid-example/Fluid Table"; }
 
     private _matrixData!: SharedMatrix<string>;
 
     static factory = new DataObjectFactory(
-        FluidTable.ComponentName,
+        FluidTable.FluidObjectName,
         FluidTable,
         [SharedMatrix.getFactory()],
         {},
@@ -111,6 +111,6 @@ class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMat
 }
 
 export const TableContainerFactory = new ContainerRuntimeFactoryWithDefaultDataStore(
-    FluidTable.ComponentName,
-    [[FluidTable.ComponentName, Promise.resolve(FluidTable.factory)]]
+    FluidTable.FluidObjectName,
+    [[FluidTable.FluidObjectName, Promise.resolve(FluidTable.factory)]]
   );

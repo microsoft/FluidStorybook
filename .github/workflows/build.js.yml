@@ -4,11 +4,8 @@
 name: Storybook CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
-    types: [opened]
+    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   build:

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "storybook": "start-storybook STORYBOOK_WEBSITE_TARGET=FLUIDFRAMEWORK -p 9009 -s public",
-    "start": "start-storybook STORYBOOK_WEBSITE_TARGET=FLUIDFRAMEWORK -p 9009 -s public",
+    "storybook": "STORYBOOK_WEBSITE_TARGET=FLUIDFRAMEWORK start-storybook -p 9009 -s public",
+    "start": "start-storybook -p 9009 -s public",
     "start:server": "tinylicious",
     "build": "build-storybook -s public"
   },

@@ -118,12 +118,6 @@ function makeSideBySideDiv(divId: string) {
     const div = document.createElement("div");
     div.innerHTML = html;
     div.classList.add('flex');
-    // div.style.flexGrow = "1";
-    // div.style.justifyContent = 'space-between';
-    // div.style.width = "50%"; // ensure the divs don't encroach on each other
-    // // div.style.border = "1px solid lightgray";
-    // div.style.boxSizing = "border-box";
-    // div.style.position = "relative"; // Make the new <div> a CSS containing block.
     div.id = divId;
     return div;
 }

@@ -4,7 +4,7 @@
  */
 import { ContainerRuntimeFactoryWithDefaultDataStore } from '@fluidframework/aqueduct';
 import { IProxyLoaderFactory } from "@fluidframework/container-definitions";
-import { Loader, Container } from '@fluidframework/container-loader';
+import { Loader } from '@fluidframework/container-loader';
 
 import { getDocumentServiceFactory } from "./multiDocumentServiceFactory";
 import { MultiUrlResolver } from "./multiResolver";
@@ -40,19 +40,4 @@ export async function getLoader(
         new Map<string, IProxyLoaderFactory>());
 
     return { loader, urlResolver };
-}
-
-export async function getFluidObject(container: Container, objectUrl: string) {
-    const response = await container.request({
-        headers: {
-            mountableView: true,
-        },
-        url: objectUrl, // Local data object name
-    });
-
-    if (response.status !== 200 || !(response.mimeType === "fluid/object")) {
-        throw new Error(`Could not load Fluid object ${objectUrl}`);
-    }
-
-    return response.value;
 }

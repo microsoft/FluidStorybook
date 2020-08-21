@@ -5,7 +5,9 @@
 import React, { useEffect, useRef } from 'react';
 import { v4 as uuid } from "uuid";
 import { IFluidCodeDetails } from "@fluidframework/container-definitions";
-import { getLoader, getFluidObject, RouteOptions } from './loader';
+import { Container } from '@fluidframework/container-loader';
+import { requestFluidObject } from "@fluidframework/runtime-utils";
+import { getLoader, RouteOptions } from './loader';
 import { renderFluidDataObjects } from './renderer';
 
 export const FluidLoader = (props: React.PropsWithChildren<any>) => { 
@@ -13,35 +15,21 @@ export const FluidLoader = (props: React.PropsWithChildren<any>) => {
 
     useEffect(() => {
         async function render() {
-            // Add loader creation code here
-            const fluidExport = props.factory;
-            const documentId = uuid();
-            const codeDetails: IFluidCodeDetails = {
-                package: "storybook-pkg",
-                config: {},
-            };
             // Empty string means get the default DataObject from container
-            // You could also grab a specific component from the container using "nameOfDataObject"
+            // You could also grab a specific data object from the container using "nameOfDataObject"
             // For example in DiceRoller you could use "@fluid-example/dice-roller"
-            const dataObjectName = ""; 
-            let mode: RouteOptions = { mode: "local" };
+            const dataObjectName = "";
+            let options: RouteOptions = { mode: "local" };
 
-            // Create a Loader and a Container for the first client.
-            const { loader: loader1, urlResolver: urlResolver1 } = await getLoader(fluidExport, documentId, mode);
-            const container1 = await loader1.createDetachedContainer(codeDetails);
-            const attachUrl1 = await urlResolver1.createRequestForCreateNew(documentId);
-            await container1.attach(attachUrl1);
-
+            // Create a new Container.
+            const container1 = await createFluidContainer(props.factory, options);
             // Get the Fluid DataObject from the first Container.
-            const fluidDataObject1 = await getFluidObject(container1, dataObjectName);
+            const fluidDataObject1 = await requestFluidObject(container1, dataObjectName);
 
-            // Create a second Loader and get the Container with 'documentId'.
-            const { loader: loader2, urlResolver: urlResolver2 } = await getLoader(fluidExport, documentId, mode);
-            const attachUrl2 = await urlResolver2.getAbsoluteUrl(container1.resolvedUrl, "");
-            const container2 = await loader2.resolve({ url: attachUrl2 });
-
+            // Load a second Container from the Container that we created above.
+            const container2 = await loadFluidContainer(props.factory, container1, options);
             // Get the Fluid DataObject from the second Container.
-            const fluidDataObject2 = await getFluidObject(container2, dataObjectName);
+            const fluidDataObject2 = await requestFluidObject(container2, dataObjectName);
 
             // Handle rendering
             let fluidNode = await renderFluidDataObjects(props, fluidDataObject1, fluidDataObject2, "") as HTMLElement;
@@ -73,4 +61,69 @@ function convertToTitle(value: string) {
         }
     }
     return value;
+}
+
+// A cache of the document id per fluidExport.
+const documentIdCache = new Map<any, string>();
+
+/**
+ * Creates a Loader and a Container.
+ * If we already have a documentId for the given fluidExport, we use it to load an existing Container.
+ * Otherwise, we create a new Container and attach it.
+ * @param fluidExport - The entry point into the Container.
+ * @param options - The RouteOptions that specify which server to use.
+ */
+async function createFluidContainer(
+    fluidExport: any,
+    options: RouteOptions,
+): Promise<Container> {
+    // Check if we already have created a document for this Fluid factory in this session. If so, load the
+    // existing document instead of creating a new one.
+    let createDocument: boolean = false;
+    let documentId = documentIdCache.get(fluidExport);
+    if (documentId === undefined) {
+        // A document does not exist for this session. Create a documentId to be used to create a new document
+        // and set the 'createDocument' flag to true.
+        documentId = uuid();
+        documentIdCache.set(fluidExport, documentId);
+        createDocument = true;
+    }
+
+    let container: Container;
+    // Create a Loader for the first client.
+    const { loader, urlResolver } = await getLoader(fluidExport, documentId, options);
+    // If the 'createDocument' flag is set, create a new container. Otherwise, load an existing one with the 'documentId'.
+    if (createDocument) {
+        const codeDetails: IFluidCodeDetails = {
+            package: "storybook-pkg",
+            config: {},
+        };
+
+        container = await loader.createDetachedContainer(codeDetails);
+        const attachUrl = await urlResolver.createRequestForCreateNew(documentId);
+        await container.attach(attachUrl);
+    } else {
+        const documentLoadUrl = `${window.location.origin}/${documentId}`;
+        container = await loader.resolve({ url: documentLoadUrl });
+    }
+
+    return container;
+}
+
+/**
+ * Creates a Loader and loads an existing Container.
+ * @param fluidExport - The entry point into the Container.
+ * @param fromContainer - The Container from which the new Container is to be created.
+ * @param options - The RouteOptions that specify which server to use.
+ */
+async function loadFluidContainer(
+    fluidExport: any,
+    fromContainer: Container,
+    options: RouteOptions,
+): Promise<Container> {
+    const { loader, urlResolver } = await getLoader(fluidExport, fromContainer.id, options);
+    const documentLoadUrl = await urlResolver.getAbsoluteUrl(fromContainer.resolvedUrl, "");
+    const container = await loader.resolve({ url: documentLoadUrl });
+
+    return container;
 }

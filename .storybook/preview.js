@@ -16,5 +16,5 @@ export const parameters = {
     showRoots: true,
     showPanel: false
   },
-	viewMode: 'docs'
+	// viewMode: 'docs'
 }

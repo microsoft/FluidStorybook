@@ -29,8 +29,8 @@ async function renderFluidObjectsSidebySide(props: any, dataObject1: any, dataOb
     }
     else {
         // Load and render the Fluid object since it has it's own render() function
-        await renderFluidObject(dataObject1, fluidObjectUrl, leftDiv);
-        await renderFluidObject(dataObject2, fluidObjectUrl, rightDiv);
+        await renderFluidObject(dataObject1, fluidObjectUrl, leftDiv as HTMLDivElement);
+        await renderFluidObject(dataObject2, fluidObjectUrl, rightDiv as HTMLDivElement);
         return resolve(sideBySideDiv);
     }
 }
@@ -81,20 +81,43 @@ async function renderFluidObject(dataObject: any, url: string, div: HTMLDivEleme
 export function getSideBySideDivs() {
     const sideBySideDiv = document.createElement('div');
     sideBySideDiv.style.display = "flex";
-    const leftDiv = makeSideBySideDiv("sbs-left");
-    const rightDiv = makeSideBySideDiv("sbs-right");
-    sideBySideDiv.append(leftDiv, rightDiv);
+    const leftDivContainer = makeSideBySideDiv("sbs-left");
+    const leftDiv = leftDivContainer.querySelector('.browser .body');
+    const rightDivContainer = makeSideBySideDiv("sbs-right");
+    const rightDiv = rightDivContainer.querySelector('.browser .body');
+    sideBySideDiv.append(leftDivContainer, rightDivContainer);
     return { leftDiv, rightDiv, sideBySideDiv };
 }
 
 function makeSideBySideDiv(divId: string) {
+    const isWindows = navigator.platform.indexOf('Win') > -1;
+    const macControls = (isWindows) ? 'none': 'inline-block';
+    const windowsControls = (isWindows) ? 'inline-block': 'none';
+    const html = `
+    <div class="window browser">
+        <div class="header">
+            <span class="bullets mac" style="display:${macControls}">
+                <span class="bullet bullet-red"></span>
+                <span class="bullet bullet-yellow"></span>
+                <span class="bullet bullet-green"></span>
+            </span>
+            <span class="title">
+                <span class="scheme">https://</span>your-fluid-app.com
+            </span>
+            <span class="windows" style="display:${windowsControls}">
+                <span class="windows-icon"><div class="windows-min-icon"></div></span>
+                <span class="windows-icon"><div class="windows-max-icon"></div></span>
+                <span class="windows-icon windows-close-icon">x</span>
+            </span>
+        </div>
+        <div class="body">
+            
+        </div>
+    </div> 
+    `;
     const div = document.createElement("div");
-    div.style.flexGrow = "1";
-    div.style.justifyContent = 'space-between';
-    div.style.width = "50%"; // ensure the divs don't encroach on each other
-    // div.style.border = "1px solid lightgray";
-    div.style.boxSizing = "border-box";
-    div.style.position = "relative"; // Make the new <div> a CSS containing block.
+    div.innerHTML = html;
+    div.classList.add('flex');
     div.id = divId;
     return div;
 }

@@ -1,0 +1,149 @@
+body {
+    font-family:"Open Sans",sans-serif;
+}
+
+.center {
+    text-align: center;
+}
+
+#root, #docs-root {
+    max-width: 1280px;
+}
+
+div.sbdocs, p.sbdocs, li.sbdocs, p.sbdocs > code, a.sbdocs {
+    font-size: 14pt;
+}
+
+div.sbdocs-wrapper {
+    padding: 2rem 20px;
+}
+
+div.sbdocs-content {
+    max-width: 100%;
+}
+
+.flex {
+    flex-grow: 1; 
+    justify-content: space-around; 
+    width: 50%; 
+    margin:0 10px;
+    box-sizing: border-box; 
+    position: relative;
+}
+
+.window {
+    height: 100%;
+    min-height: 250px;
+    display: inline-block;
+    border: 1px solid #c3c3c3;
+    width: 100%;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(50,50,50,0.11);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(50,50,50,0.11);
+    box-shadow: 0px 2px 3px 0px rgba(50,50,50,0.11);
+    text-align: left;
+    vertical-align: top;
+    margin: 0 20px;
+    animation: zoom 500ms;
+    -webkit-animation: zoom 500ms;
+}
+
+.browser div.header {
+    background: #e8e8e8;
+    border-radius: 4px 4px 0 0;
+    padding-bottom: 3px;
+}
+.window div.header {
+    padding: 0 9px;
+    line-height: 30px;
+    vertical-align: top;
+    padding: 2px 9px 0;
+}
+
+.window span.mac {
+    display: none;
+}
+
+.window span.bullets {
+    margin-bottom: 3px;
+}
+
+.window span.bullet-red {
+    background: #df7065;
+}
+
+.window span.bullet-yellow {
+    background: #e6bb46;
+}
+
+.window span.bullet-green {
+    background: #5bcc8b;
+}
+
+.window .bullet {
+    height: 11px;
+    width: 11px;
+    display: inline-block;
+    background: #ccc;
+    border-radius: 100%;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-bottom: 2px;
+}
+
+.browser div.header span.title {
+    background: #fff;
+    display: inline-block;
+    width: 60%;
+    border-radius: 4px;
+    padding: 6px 14px 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.browser div.header span.title .scheme {
+    color: #7ed321;
+    font-size: 11px;
+}
+
+.window div.header span.title {
+    font: 11px "Myriad Pro", "Arial";
+    margin-bottom: 3px;
+}
+
+.browser div.body {
+    padding: 16px;
+    font: 11px "Lucida Grande", "Open Sans";
+}
+
+.window .windows {
+    display: none;
+    margin-top: -8px;
+    float: right;
+}
+
+.windows span.windows-icon {
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+.windows .windows-min-icon {
+    display: inline-block;
+    width: 7px;
+    height: 0px;
+    border: 0.75px solid #000;
+    border-radius: 1px;
+    vertical-align: middle;
+}
+
+.windows .windows-max-icon {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 0.75px solid #000;
+    border-radius: 1px;
+}
+
+.windows .windows-close-icon {
+    font-weight: 300;
+}

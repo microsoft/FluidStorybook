@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from "uuid";
 import { IFluidCodeDetails } from "@fluidframework/container-definitions";
 import { Container } from '@fluidframework/container-loader';
@@ -12,6 +12,7 @@ import { renderFluidDataObjects } from './renderer';
 
 export const FluidLoader = (props: React.PropsWithChildren<any>) => { 
     const fluidNodeRef = useRef<HTMLDivElement>(null);
+    const [title, setTitle] = useState("");
 
     useEffect(() => {
         async function render() {
@@ -20,6 +21,7 @@ export const FluidLoader = (props: React.PropsWithChildren<any>) => {
             // For example in DiceRoller you could use "@fluid-example/dice-roller"
             const dataObjectName = "";
             let options: RouteOptions = { mode: "local" };
+            setTitle(convertToTitle(props.factory.defaultDataObjectName));
 
             // Create a new Container.
             const container1 = await createFluidContainer(props.factory, options);
@@ -42,7 +44,8 @@ export const FluidLoader = (props: React.PropsWithChildren<any>) => {
     // Return initial HTML. Fluid node will be appended after useEffect is processed.
     return (
         <div id="fluid-container">
-            <h1>{convertToTitle(props.factory.defaultDataObjectName)}</h1>
+            <h1>{title}</h1>
+            <br />
             <div ref={fluidNodeRef}></div>
         </div>
     );

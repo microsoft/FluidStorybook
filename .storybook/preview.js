@@ -7,7 +7,7 @@ import codeEditorDecorator from './codeeditor-addon/codeeditorDecorator';
 addDecorator(sourceCodeDecorator);
 addDecorator(codeEditorDecorator);
 
-addParameters({
+export const parameters = {
   options: {
     /**
      * display the top-level grouping as a "root" in the sidebar
@@ -16,4 +16,5 @@ addParameters({
     showRoots: true,
     showPanel: false
   },
-});
+	viewMode: 'docs'
+}

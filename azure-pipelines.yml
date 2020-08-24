@@ -9,64 +9,98 @@ trigger:
 pr: none
 
 variables:
-  skipComponentGovernanceDetection: true
+  - name: skipComponentGovernanceDetection
+    value: true
+  - group: doc-versions
+  - group: storage-vars
+  - name: latestPipeline
+    value: ${{ or(
+      eq(variables['Build.SourceBranchName'], 'main'),
+      eq(variables['Build.SourceBranchName'], 'pl-test')
+      )}}
+  - name: n1Branch
+    value: ${{ join('/refs/heads/release/', variables['N1_BRANCH']) }}
+  - name: n1Pipeline
+    value: ${{ eq(variables['Build.SourceBranchName'], variables['N1_BRANCH']) }}
+  - name: releasePipeline
+    value: ${{ eq(variables['Build.SourceBranchName'], variables['RELEASE_BRANCH']) }}
+  - name: validRun
+    value: ${{ or(variables.releasePipeline, variables.n1Pipeline, variables.latestPipeline) }}
+  - name: repoToTrigger
+    value: microsoft/FluidFramework-docs
 
-pool: 'Main'
+pool: Main
 
-steps:
-- task: ComponentGovernanceComponentDetection@0
-  inputs:
-    scanType: 'Register'
-    verbosity: 'Verbose'
-    alertWarningLevel: 'High'
-- task: UseNode@1
-  displayName: Use Node 12.x
-  inputs:
-    version: 12.x
-
-# This step will be removed after the packages are on npmjs
-- task: npmAuthenticate@0
-  displayName: Auth
-  inputs:
-    workingFile: '.npmrc'
-    customEndpoint: 'Offnet Packages'
-- task: Npm@1
-  displayName: Install
-  inputs:
-    command: 'custom'
-    customCommand: 'ci'
-
-- task: Npm@1
+stages:
+- stage: build
   displayName: Build
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
+  jobs:
+  - job: build
+    displayName: Build
+    steps:
+    # This step will be removed after the packages are on npmjs
+    - task: npmAuthenticate@0
+      displayName: Auth
+      inputs:
+        workingFile: '.npmrc'
+        customEndpoint: 'Offnet Packages'
+    - task: Npm@1
+      displayName: Install
+      inputs:
+        command: 'custom'
+        customCommand: 'ci'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Pipeline.Workspace)/storybook-static'
-    includeRootFolder: false
-    archiveType: 'tar' # Options: zip, 7z, tar, wim
-    tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
-    archiveFile: '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz'
-    replaceExistingArchive: true
-    verbose: true # Optional
-    #quiet: # Optional
+    - task: Npm@1
+      displayName: Build
+      inputs:
+        command: 'custom'
+        customCommand: 'run build'
 
-- task: AzureCLI@2
-  displayName: 'Upload JSON'
-  inputs:
-    azureSubscription: 'fluid-docs'
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Pipeline.Workspace)/storybook-static'
+        includeRootFolder: false
+        archiveType: 'tar' # Options: zip, 7z, tar, wim
+        tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
+        archiveFile: '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz'
+        replaceExistingArchive: true
+        verbose: true # Optional
+        #quiet: # Optional
 
-- task: AzureCLI@2
-  displayName: 'Upload JSON as latest.tar.gz'
-  inputs:
-    azureSubscription: 'fluid-docs'
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+    - task: AzureCLI@2
+      displayName: 'Upload JSON'
+      inputs:
+        azureSubscription: 'fluid-docs'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+
+    - task: AzureCLI@2
+      displayName: 'Upload JSON as latest.tar.gz'
+      inputs:
+        azureSubscription: 'fluid-docs'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+
+- stage: github_actions
+  displayName: GitHub Action
+  pool: server
+  dependsOn: build
+  jobs:
+    - job: trigger_github_action
+      displayName: 'Trigger repository_dispatch'
+      steps:
+      - task: InvokeRESTAPI@1
+        inputs:
+          connectionType: 'connectedServiceName' # Options: connectedServiceName, connectedServiceNameARM
+          serviceConnection: 'GitHub Actions' # Required when connectionType == ConnectedServiceName
+          #azureServiceConnection: # Required when connectionType == ConnectedServiceNameARM
+          method: 'POST' # Options: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH
+          headers: '{"Accept": "application/vnd.github.v3+json"}'
+          body: '{"event_type": "Storybook build for SHA $(Build.SourceVersion)"}' # Required when method != GET && Method != HEAD
+          urlSuffix: 'repos/${{ variables.repoToTrigger }}/dispatches' # Optional
+          waitForCompletion: 'false' # Options: true, false
+          #successCriteria: # Optional

@@ -1,12 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# FluidHelloWorld build for CI
+# build-storybook pipeline
 
-trigger:
-- main
-
-pr: none
+name: $(Build.BuildId)
 
 variables:
   - name: skipComponentGovernanceDetection
@@ -28,6 +25,14 @@ variables:
     value: ${{ or(variables.releasePipeline, variables.n1Pipeline, variables.latestPipeline) }}
   - name: repoToTrigger
     value: microsoft/FluidFramework-docs
+
+# no branch and PR triggers
+trigger:
+  branches:
+    include:
+    - main
+    - act*
+pr: none
 
 pool: Main
 

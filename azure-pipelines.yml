@@ -63,7 +63,7 @@ stages:
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
-          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name ${{ STORAGE_ACCOUNT }} --account-key ${{ STORAGE_KEY }} --verbose
 
     - task: AzureCLI@2
       displayName: 'Upload JSON as latest.tar.gz'
@@ -72,7 +72,7 @@ stages:
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
-          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name ${{ STORAGE_ACCOUNT }} --account-key ${{ STORAGE_KEY }} --verbose
 
 - stage: github_actions
   displayName: GitHub Action

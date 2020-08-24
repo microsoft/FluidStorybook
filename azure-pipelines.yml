@@ -27,6 +27,11 @@ stages:
   - job: build
     displayName: Build
     steps:
+    - task: UseNode@1
+      displayName: Use Node 12.x
+      inputs:
+        version: 12.x
+
     # This step will be removed after the packages are on npmjs
     - task: npmAuthenticate@0
       displayName: Auth

@@ -6,13 +6,12 @@
 trigger:
 - main
 
-pr:
-- main
+pr: none
 
 variables:
   skipComponentGovernanceDetection: true
 
-pool: 'Lite'
+pool: 'Main'
 
 steps:
 - task: ComponentGovernanceComponentDetection@0
@@ -22,7 +21,7 @@ steps:
     alertWarningLevel: 'High'
 - task: UseNode@1
   displayName: Use Node 12.x
-  inputs: 
+  inputs:
     version: 12.x
 
 # This step will be removed after the packages are on npmjs
@@ -35,7 +34,7 @@ steps:
   displayName: Install
   inputs:
     command: 'custom'
-    customCommand: 'install'
+    customCommand: 'ci'
 
 - task: Npm@1
   displayName: Build
@@ -43,17 +42,31 @@ steps:
     command: 'custom'
     customCommand: 'run build'
 
-- task: Npm@1
-  displayName: Test
+- task: ArchiveFiles@2
   inputs:
-    command: 'custom'
-    customCommand: 'run test -- --reporters=default --reporters=jest-junit'
+    rootFolderOrFile: '$(Pipeline.Workspace)/storybook-static'
+    includeRootFolder: false
+    archiveType: 'tar' # Options: zip, 7z, tar, wim
+    tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
+    archiveFile: '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz'
+    replaceExistingArchive: true
+    verbose: true # Optional
+    #quiet: # Optional
 
-- task: PublishTestResults@2
-  displayName: Publish Test Results
+- task: AzureCLI@2
+  displayName: 'Upload JSON'
   inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*junit-report.xml'
-    searchFolder: nyc
-    mergeTestResults: true
-  condition: succeededOrFailed()
+    azureSubscription: 'fluid-docs'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose
+
+- task: AzureCLI@2
+  displayName: 'Upload JSON as latest.tar.gz'
+  inputs:
+    azureSubscription: 'fluid-docs'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name ${{ parameters.STORAGE_ACCOUNT }} --account-key ${{ parameters.STORAGE_KEY }} --verbose

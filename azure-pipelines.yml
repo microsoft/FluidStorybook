@@ -6,23 +6,7 @@
 name: $(Build.BuildId)
 
 variables:
-  - name: skipComponentGovernanceDetection
-    value: true
-  - group: doc-versions
   - group: storage-vars
-  - name: latestPipeline
-    value: ${{ or(
-      eq(variables['Build.SourceBranchName'], 'main'),
-      eq(variables['Build.SourceBranchName'], 'pl-test')
-      )}}
-  - name: n1Branch
-    value: ${{ join('/refs/heads/release/', variables['N1_BRANCH']) }}
-  - name: n1Pipeline
-    value: ${{ eq(variables['Build.SourceBranchName'], variables['N1_BRANCH']) }}
-  - name: releasePipeline
-    value: ${{ eq(variables['Build.SourceBranchName'], variables['RELEASE_BRANCH']) }}
-  - name: validRun
-    value: ${{ or(variables.releasePipeline, variables.n1Pipeline, variables.latestPipeline) }}
   - name: repoToTrigger
     value: microsoft/FluidFramework-docs
 

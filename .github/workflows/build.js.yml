@@ -4,12 +4,16 @@
 name: Storybook CI
 
 on:
+  push:
+    branches:
+      - main
+      - act*
   pull_request:
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
   build:
-
+    name: Build Storybook
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,11 +21,27 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: install-build-test ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm i
-    - run: npm run build --if-present
-    - run: npm test --if-present
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: npm ci
+        run: npm ci
+
+      - name: npm run build
+        run: npm run build --if-present
+
+      - name: Create tarball
+        run: tar -czvf storybook.tar.gz storybook-static/
+
+      - name: Upload Storybook
+        uses: actions/upload-artifact@v2
+        with:
+          name: storybook
+          path: storybook.tar.gz

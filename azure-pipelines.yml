@@ -1,59 +1,100 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# FluidHelloWorld build for CI
+# build-storybook pipeline
 
-trigger:
-- main
-
-pr:
-- main
+name: $(Build.BuildId)
 
 variables:
-  skipComponentGovernanceDetection: true
+  - group: storage-vars
+  - name: repoToTrigger
+    value: microsoft/FluidFramework-docs
 
-pool: 'Lite'
+# no branch and PR triggers
+trigger:
+  branches:
+    include:
+    - main
+    - act*
+pr: none
 
-steps:
-- task: ComponentGovernanceComponentDetection@0
-  inputs:
-    scanType: 'Register'
-    verbosity: 'Verbose'
-    alertWarningLevel: 'High'
-- task: UseNode@1
-  displayName: Use Node 12.x
-  inputs: 
-    version: 12.x
+pool: Main
 
-# This step will be removed after the packages are on npmjs
-- task: npmAuthenticate@0
-  displayName: Auth
-  inputs:
-    workingFile: '.npmrc'
-    customEndpoint: 'Offnet Packages'
-- task: Npm@1
-  displayName: Install
-  inputs:
-    command: 'custom'
-    customCommand: 'install'
-
-- task: Npm@1
+stages:
+- stage: build
   displayName: Build
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
+  jobs:
+  - job: build
+    displayName: Build
+    steps:
+    - task: UseNode@1
+      displayName: Use Node 12.x
+      inputs:
+        version: 12.x
 
-- task: Npm@1
-  displayName: Test
-  inputs:
-    command: 'custom'
-    customCommand: 'run test -- --reporters=default --reporters=jest-junit'
+    # This step will be removed after the packages are on npmjs
+    - task: npmAuthenticate@0
+      displayName: Auth
+      inputs:
+        workingFile: '.npmrc'
+        customEndpoint: 'Offnet Packages'
+    - task: Npm@1
+      displayName: Install
+      inputs:
+        command: 'custom'
+        customCommand: 'ci'
 
-- task: PublishTestResults@2
-  displayName: Publish Test Results
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/*junit-report.xml'
-    searchFolder: nyc
-    mergeTestResults: true
-  condition: succeededOrFailed()
+    - task: Npm@1
+      displayName: Build
+      inputs:
+        command: 'custom'
+        customCommand: 'run build'
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)/storybook-static'
+        includeRootFolder: false
+        archiveType: 'tar' # Options: zip, 7z, tar, wim
+        tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
+        archiveFile: '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz'
+        replaceExistingArchive: true
+        verbose: true # Optional
+        #quiet: # Optional
+
+    - task: AzureCLI@2
+      displayName: 'Upload Storybook'
+      inputs:
+        azureSubscription: 'fluid-docs'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name $(STORAGE_ACCOUNT) --account-key $(STORAGE_KEY) --verbose
+
+    - task: AzureCLI@2
+      displayName: 'Upload Storybook as latest.tar.gz'
+      inputs:
+        azureSubscription: 'fluid-docs'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n latest.tar.gz --account-name $(STORAGE_ACCOUNT) --account-key $(STORAGE_KEY) --verbose
+
+- stage: github_actions
+  displayName: GitHub Action
+  pool: server
+  dependsOn: build
+  jobs:
+    - job: trigger_github_action
+      displayName: 'Trigger repository_dispatch'
+      steps:
+      - task: InvokeRESTAPI@1
+        inputs:
+          connectionType: 'connectedServiceName' # Options: connectedServiceName, connectedServiceNameARM
+          serviceConnection: 'GitHub Actions' # Required when connectionType == ConnectedServiceName
+          #azureServiceConnection: # Required when connectionType == ConnectedServiceNameARM
+          method: 'POST' # Options: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH
+          headers: '{"Accept": "application/vnd.github.v3+json"}'
+          body: '{"event_type": "Storybook build for SHA $(Build.SourceVersion)"}' # Required when method != GET && Method != HEAD
+          urlSuffix: 'repos/${{ variables.repoToTrigger }}/dispatches' # Optional
+          waitForCompletion: 'false' # Options: true, false
+          #successCriteria: # Optional

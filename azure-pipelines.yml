@@ -62,7 +62,7 @@ stages:
         #quiet: # Optional
 
     - task: AzureCLI@2
-      displayName: 'Upload JSON'
+      displayName: 'Upload Storybook'
       inputs:
         azureSubscription: 'fluid-docs'
         scriptType: bash
@@ -71,7 +71,7 @@ stages:
           az storage blob upload -f '$(Pipeline.Workspace)/$(Build.SourceVersion).tar.gz' -c 'storybook' -n $(Build.SourceVersion).tar.gz --account-name $(STORAGE_ACCOUNT) --account-key $(STORAGE_KEY) --verbose
 
     - task: AzureCLI@2
-      displayName: 'Upload JSON as latest.tar.gz'
+      displayName: 'Upload Storybook as latest.tar.gz'
       inputs:
         azureSubscription: 'fluid-docs'
         scriptType: bash

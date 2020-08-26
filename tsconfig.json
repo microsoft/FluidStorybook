@@ -2,7 +2,6 @@
   "extends": "@fluidframework/build-common/ts-common-config.json",
   "compileOnSave": false,
   "compilerOptions": {
-    "downlevelIteration": true,
     "jsx": "react",
     "strictNullChecks": false,
   },

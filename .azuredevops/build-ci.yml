@@ -3,9 +3,7 @@
 
 # build for CI
 
-trigger:
-    - main
-    
+trigger:    
     pr:
     - main
     

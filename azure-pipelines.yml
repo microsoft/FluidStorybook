@@ -2,6 +2,8 @@
 # Licensed under the MIT License.
 
 # build-storybook pipeline
+# This pipeline builds storybook, makes a tarball, uploads a tarball, and then tells the repo
+# about the update
 
 name: $(Build.BuildId)
 

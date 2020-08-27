@@ -2,13 +2,15 @@
 # Licensed under the MIT License.
 
 # build-storybook pipeline
+# This pipeline builds storybook, makes a tarball, uploads a tarball, and then tells the repo
+# about the update
 
 name: $(Build.BuildId)
 
 variables:
   - group: storage-vars
   - name: repoToTrigger
-    value: microsoft/FluidFramework-docs
+    value: microsoft/FluidFramework
 
 # no branch and PR triggers
 trigger:
@@ -95,6 +97,6 @@ stages:
           method: 'POST' # Options: OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH
           headers: '{"Accept": "application/vnd.github.v3+json"}'
           body: '{"event_type": "Storybook build for SHA $(Build.SourceVersion)"}' # Required when method != GET && Method != HEAD
-          urlSuffix: 'repos/${{ variables.repoToTrigger }}/dispatches' # Optional
+          urlSuffix: 'repos/$(repoToTrigger)/dispatches' # Optional
           waitForCompletion: 'false' # Options: true, false
           #successCriteria: # Optional

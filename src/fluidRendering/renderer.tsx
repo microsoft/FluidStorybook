@@ -10,47 +10,44 @@ export async function renderFluidDataObjects(props: any, dataObject1: any, dataO
 
     return new Promise(async (resolve, reject) => {
         // Create container div that Fluid object will be rendered into for server demos
-        return await renderFluidObjectsSidebySide(props, dataObject1, dataObject2, fluidObjectUrl, resolve);
+        return await renderFluidObjectsDivs(props, dataObject1, dataObject2, fluidObjectUrl, resolve);
     });
     
 }
 
-async function renderFluidObjectsSidebySide(props: any, dataObject1: any, dataObject2: any, fluidObjectUrl: string, resolve: any) {
-    const { leftDiv, rightDiv, sideBySideDiv } = getSideBySideDivs();
+async function renderFluidObjectsDivs(props: any, dataObject1: any, dataObject2: any, fluidObjectUrl: string, resolve: any) {
+    const divs = getDivs(props.layout);
 
     if (props.view) {
         // Convert props value to enum to ensure they pass allowed value
         switch (props.viewType) {
             case 'js':
-                return createDomView(props, dataObject1, dataObject2, resolve);
+                return createDomView(props, dataObject1, dataObject2, divs, resolve);
             case 'react':
-                return createReactView(props, dataObject1, dataObject2, resolve);
+                return createReactView(props, dataObject1, dataObject2, divs, resolve);
         }
     }
     else {
-        // Load and render the Fluid object since it has it's own render() function
-        await renderFluidObject(dataObject1, fluidObjectUrl, leftDiv as HTMLDivElement);
-        await renderFluidObject(dataObject2, fluidObjectUrl, rightDiv as HTMLDivElement);
-        return resolve(sideBySideDiv);
+        // Fluid object has it's own render() function
+        await renderFluidObject(dataObject1, fluidObjectUrl, divs.div1 as HTMLDivElement);
+        await renderFluidObject(dataObject2, fluidObjectUrl, divs.div2 as HTMLDivElement);
+        return resolve(divs.containerDiv);
     }
 }
 
-async function createDomView(props: any, dataObject1: any, dataObject2: any, resolve: any) {
+async function createDomView(props: any, dataObject1: any, dataObject2: any, divs: any, resolve: any) {
     // Create side by side view of Fluid object for local demos
-    let { leftDiv, rightDiv, sideBySideDiv} = getSideBySideDivs();
-    let leftFluidObject = new props.view(dataObject1, leftDiv);
+    let leftFluidObject = new props.view(dataObject1, divs.div1);
     leftFluidObject.render();
-    let rightFluidObject = new props.view(dataObject2, rightDiv);
+    let rightFluidObject = new props.view(dataObject2, divs.div2);
     rightFluidObject.render();
-    return resolve(sideBySideDiv);
+    return resolve(divs.containerDiv);
 }
 
-async function createReactView(Props: any, dataObject1: any, dataObject2: any, resolve: any) {
-    // Create side by side view of Fluid object for local demos
-    let { leftDiv, rightDiv, sideBySideDiv} = getSideBySideDivs();
-    ReactDOM.render(<Props.view model={dataObject1} {...Props} />, leftDiv);
-    ReactDOM.render(<Props.view model={dataObject2} {...Props} />, rightDiv);
-    return resolve(sideBySideDiv);
+async function createReactView(Props: any, dataObject1: any, dataObject2: any, divs: any, resolve: any) {
+    ReactDOM.render(<Props.view model={dataObject1} {...Props} />, divs.div1);
+    ReactDOM.render(<Props.view model={dataObject2} {...Props} />, divs.div2);
+    return resolve(divs.containerDiv);
 }
 
 async function renderFluidObject(dataObject: any, url: string, div: HTMLDivElement) {
@@ -78,18 +75,26 @@ async function renderFluidObject(dataObject: any, url: string, div: HTMLDivEleme
     view.render(div, { display: "block" });
 }
 
-export function getSideBySideDivs() {
-    const sideBySideDiv = document.createElement('div');
-    sideBySideDiv.style.display = "flex";
-    const leftDivContainer = makeSideBySideDiv("sbs-left");
-    const leftDiv = leftDivContainer.querySelector('.browser .body');
-    const rightDivContainer = makeSideBySideDiv("sbs-right");
-    const rightDiv = rightDivContainer.querySelector('.browser .body');
-    sideBySideDiv.append(leftDivContainer, rightDivContainer);
-    return { leftDiv, rightDiv, sideBySideDiv };
+export function getDivs(layout: string) {
+    const containerDiv = document.createElement('div');
+    const div1Container = makeBrowserShellDiv("sbs-left", layout);
+    const div1 = div1Container.querySelector(".browser .body");
+    const div2Container = makeBrowserShellDiv("sbs-right", layout);
+    const div2 = div2Container.querySelector(".browser .body");
+    
+    if (layout === 'vertical') {
+        const br = document.createElement('br');
+        containerDiv.append(div1Container, br, div2Container);
+    }
+    else {
+        containerDiv.style.display = "flex";
+        containerDiv.append(div1Container, div2Container);
+    }
+
+    return { div1, div2, containerDiv };
 }
 
-function makeSideBySideDiv(divId: string) {
+function makeBrowserShellDiv(divId: string, layout: string) {
     const isWindows = navigator.platform.indexOf('Win') > -1;
     const macControls = (isWindows) ? 'none': 'inline-block';
     const windowsControls = (isWindows) ? 'inline-block': 'none';
@@ -117,7 +122,9 @@ function makeSideBySideDiv(divId: string) {
     `;
     const div = document.createElement("div");
     div.innerHTML = html;
-    div.classList.add('flex');
     div.id = divId;
+    if (layout !== 'vertical') {
+        div.classList.add('flex');
+    }
     return div;
 }

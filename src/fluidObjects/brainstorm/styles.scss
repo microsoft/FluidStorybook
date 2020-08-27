@@ -6,8 +6,8 @@ body .sticky-storm {
 .note {
     display: inline-block;
     position: relative;
-    width: 6em;
-    height: 6em;
+    width: 90px;
+    height: 90px;
     background-color: #ffc;
     box-shadow: 0.1em 0.2em 0.4em rgba(0, 0, 0, 0.15);    
     margin: .5em;
@@ -65,7 +65,7 @@ body .sticky-storm {
   font-family: cursive;       
   padding: 0;
   margin: 0;  
-  font-size: .65em;
+  font-size: 14px;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -120,15 +120,16 @@ button {
   border: none;
   border-radius: 0.2em;
   margin: .5em;
+  margin-left: 1em;
   padding: .5em 2em .5em 2em;
   text-decoration: none;
   background: #666;
   color: #fff;  
-  font-size: .8em;
+  font-size: 10px;
   cursor: pointer;  
   transition: 150ms ease-in-out, transform 50ms ease;
   height: 2em;
-  width: 13em;
+  width: 12.5em;
   user-select: none;    
 }
 
@@ -151,26 +152,25 @@ button {
 .pad {
   display: flex;
   flex: 1;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   background-color: #eee;
-  padding: .5em;    
+  padding: .5em;  
 }
 
 .userName {
-  display: flex;
-  position: absolute;
-  right: .5em;
-  top: .5em;
+  margin-left: auto;
+  align-self: flex-start;
   z-index: 999;
   box-shadow: 0 0.4em 0.6em rgba(0, 0, 0, 0.15);  
   font-weight: bold;
-  padding: .2em .5em .2em .5em;
+  // margin-left: 2em;
+  margin-top: -15px;
+  padding: 0em .5em .2em .5em;
   background: white;
   border-radius: 0.3em;
   font-size: 1em;
   border: solid #ccc;
-  align-items: baseline;  
 }
 
 .userCount {

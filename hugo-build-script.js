@@ -46,7 +46,7 @@ function createHugoTemplate(stylesheetLinks, bodyContent) {
 {{ end }}
      
 {{ define "main" }}
-{{ partial "navbarSticky.html" . }
+{{ partial "navbarSticky.html" . }}
 
 ${stylesheetLinks}
 ${bodyContent}

@@ -1,7 +1,10 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { NoteroContainerFactory } from "../fluidObjects/brainstorm/container"
-import { NoteroView } from "../fluidObjects/brainstorm/view";
+import {
+  NoteroContainerFactory,
+  NoteroInstantiationFactory,
+  NoteroView,
+} from "../fluidObjects/brainstorm";
 
 <Meta title="React Demos/Brainstorm" parameters={{ defaultSrcFile: './src/fluidObjects/brainstorm/fluid-object/main.ts'}} />
 
@@ -17,7 +20,7 @@ vote on the proposed sticky note ideas and can highlight their own ideas.
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/sharedmap/" target="_blank">SharedMap</a>
 
 <Story name="Demo">
-  <FluidLoader factory={NoteroContainerFactory} view={NoteroView} viewType="react"></FluidLoader>
+  <FluidLoader entryPoint={NoteroContainerFactory} title={NoteroInstantiationFactory.type} view={NoteroView} viewType="react"></FluidLoader>
 </Story>
 
 <br /><br />

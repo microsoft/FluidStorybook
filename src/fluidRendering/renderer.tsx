@@ -4,19 +4,30 @@
  */
 import React from "react";
 import ReactDOM from "react-dom";
+import { IFluidObject } from "@fluidframework/core-interfaces";
 import { HTMLViewAdapter } from "@fluidframework/view-adapters";
+import { FluidLoaderProps } from "./fluidLoader";
 
-export async function renderFluidDataObjects(props: any, dataObject1: any, dataObject2: any, fluidObjectUrl: string = "") {
-
+export async function renderFluidDataObjects(
+    props: FluidLoaderProps,
+    dataObject1: IFluidObject,
+    dataObject2: IFluidObject,
+) {
     return new Promise(async (resolve, reject) => {
         // Create container div that Fluid object will be rendered into for server demos
-        return await renderFluidObjectsDivs(props, dataObject1, dataObject2, fluidObjectUrl, resolve);
+        return await renderFluidObjectsDivs(props, dataObject1, dataObject2, resolve);
     });
     
 }
 
-async function renderFluidObjectsDivs(props: any, dataObject1: any, dataObject2: any, fluidObjectUrl: string, resolve: any) {
-    const divs = getDivs(props.layout);
+async function renderFluidObjectsDivs(
+    props: FluidLoaderProps,
+    dataObject1: IFluidObject,
+    dataObject2: IFluidObject,
+    resolve: any,
+) {
+    // Use horizonal layout by default
+    const divs = getDivs(props.layout ?? "horizontal");
 
     if (props.view) {
         // Convert props value to enum to ensure they pass allowed value
@@ -29,13 +40,19 @@ async function renderFluidObjectsDivs(props: any, dataObject1: any, dataObject2:
     }
     else {
         // Fluid object has it's own render() function
-        await renderFluidObject(dataObject1, fluidObjectUrl, divs.div1 as HTMLDivElement);
-        await renderFluidObject(dataObject2, fluidObjectUrl, divs.div2 as HTMLDivElement);
+        await renderFluidObject(dataObject1, divs.div1 as HTMLDivElement);
+        await renderFluidObject(dataObject2, divs.div2 as HTMLDivElement);
         return resolve(divs.containerDiv);
     }
 }
 
-async function createDomView(props: any, dataObject1: any, dataObject2: any, divs: any, resolve: any) {
+async function createDomView(
+    props: FluidLoaderProps,
+    dataObject1: IFluidObject,
+    dataObject2: IFluidObject,
+    divs: any,
+    resolve: any,
+) {
     // Create side by side view of Fluid object for local demos
     let leftFluidObject = new props.view(dataObject1, divs.div1);
     leftFluidObject.render();
@@ -44,33 +61,27 @@ async function createDomView(props: any, dataObject1: any, dataObject2: any, div
     return resolve(divs.containerDiv);
 }
 
-async function createReactView(Props: any, dataObject1: any, dataObject2: any, divs: any, resolve: any) {
-    ReactDOM.render(<Props.view model={dataObject1} {...Props} />, divs.div1);
-    ReactDOM.render(<Props.view model={dataObject2} {...Props} />, divs.div2);
+async function createReactView(props: FluidLoaderProps,
+    dataObject1: IFluidObject,
+    dataObject2: IFluidObject,
+    divs: any,
+    resolve: any,
+) {
+    ReactDOM.render(<props.view model={dataObject1} {...props} />, divs.div1);
+    ReactDOM.render(<props.view model={dataObject2} {...props} />, divs.div2);
     return resolve(divs.containerDiv);
 }
 
-async function renderFluidObject(dataObject: any, url: string, div: HTMLDivElement) {
-    // let fluidObject = await getFluidObject(dataObject, url);
-
-    // if (fluidObject === undefined) {
-    //     return;
-    // }
-
+async function renderFluidObject(dataObject: IFluidObject, div: HTMLDivElement) {
     // We should be retaining a reference to mountableView long-term, so we can call unmount() on it to correctly
     // remove it from the DOM if needed.
     // SamsNotes: Typically I'd rather this get moved into HTMLViewAdapter, create something like UMD
     // https://github.com/umdjs/umd
     if (dataObject.IFluidMountableView) {
-        dataObject.mount(div);
+        dataObject.IFluidMountableView.mount(div);
         return;
     }
 
-    // If we don't get a mountable view back, we can still try to use a view adapter.  This won't always work (e.g.
-    // if the response is a React-based Fluid object using hooks) and is not the preferred path, but sometimes it
-    // can work.
-    console.warn(`Container returned a non-IFluidObjectMountableView.  This can cause errors when mounting fluid objects `
-        + `with React hooks across bundle boundaries.  URL: ${url}`);
     const view = new HTMLViewAdapter(dataObject);
     view.render(div, { display: "block" });
 }

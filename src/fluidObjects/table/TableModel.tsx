@@ -5,11 +5,10 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { 
-    DataObject, 
-    DataObjectFactory, 
-    ContainerRuntimeFactoryWithDefaultDataStore } 
-from "@fluidframework/aqueduct";
+import {
+    DataObject,
+    DataObjectFactory,
+} from "@fluidframework/aqueduct";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
 import { SharedMatrix } from "@fluidframework/matrix";
 import { IFluidHandle } from "@fluidframework/core-interfaces";
@@ -19,7 +18,7 @@ import { TableView } from "./TableView";
 
 const matrixDataStoreKey = "matrixDataStoreKey";
 
-class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMatrixConsumer<string> {
+export class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMatrixConsumer<string> {
     public get IFluidHTMLView() {
         return this;
     }
@@ -110,8 +109,3 @@ class FluidTable extends DataObject implements IFluidTable, IFluidHTMLView, IMat
         this.emit("cellChanged", rowStart, colStart, this.getCell(rowStart, colStart));
     }
 }
-
-export const TableContainerFactory = new ContainerRuntimeFactoryWithDefaultDataStore(
-    FluidTable.FluidObjectName,
-    [[FluidTable.FluidObjectName, Promise.resolve(FluidTable.factory)]]
-  );

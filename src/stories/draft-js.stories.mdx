@@ -1,7 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { FluidDraftJsContainer } from "../fluidObjects/draft-js/container";
-import { FluidDraftJsView } from "../fluidObjects/draft-js/view";
+import { FluidDraftJsObject, FluidDraftJsContainer, FluidDraftJsView } from "../fluidObjects/draft-js";
 
 <Meta title="React Demos/Draft-JS" parameters={{ defaultSrcFile: './src/fluidObjects/draft-js/fluid-object/FluidDraftJs.tsx'}} />
 
@@ -16,7 +15,7 @@ between multiple rich-text editors.
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/sequence/sharedstring/" target="_blank">SharedString</a>
 
 <Story name="Demo">
-  <FluidLoader factory={FluidDraftJsContainer} view={FluidDraftJsView} viewType="react"></FluidLoader>
+  <FluidLoader entryPoint={FluidDraftJsContainer} title={FluidDraftJsObject.Name} view={FluidDraftJsView} viewType="react"></FluidLoader>
 </Story>
 
 <br /><br />

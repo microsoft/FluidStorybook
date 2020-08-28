@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { DiceRoller } from '../fluidObjects/diceRollerJS/DiceRoller';
 import { DiceRollerContainer } from '../fluidObjects/diceRollerJS/DiceRollerContainer';
 import { DiceRollerView } from '../fluidObjects/diceRollerJS/DiceRollerView';
 
@@ -16,5 +17,5 @@ uses JavaScript and the DOM to render the output.
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/shareddirectory/" target="_blank">SharedDirectory</a>
 
 <Story name="Demo">
-    <FluidLoader factory={DiceRollerContainer} view={DiceRollerView} viewType="js"></FluidLoader>
+    <FluidLoader entryPoint={DiceRollerContainer} title={DiceRoller.DataObjectName} view={DiceRollerView} viewType="js"></FluidLoader>
 </Story>

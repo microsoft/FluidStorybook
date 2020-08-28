@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { fluidExport } from '../fluidObjects/sudoku/index';
+import { fluidExport, FluidSudokuName } from '../fluidObjects/sudoku/index';
 
 <Meta title="React Demos/Sudoku" parameters={{ defaultSrcFile: './src/fluidObjects/sudoku/fluidSudoku.tsx'}} />
 
@@ -13,7 +13,7 @@ This example allows multiple users to collaborate in real-time on a game of Sudo
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/sharedmap/" target="_blank">SharedMap</a>
 
 <Story name="Demo">
-  <FluidLoader factory={fluidExport}></FluidLoader>
+  <FluidLoader entryPoint={fluidExport} title={FluidSudokuName}></FluidLoader>
 </Story>
 
 <br /><br />

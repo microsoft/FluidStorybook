@@ -1,18 +1,31 @@
-import { ICodeLoader, IFluidCodeDetails } from "@fluidframework/container-definitions";
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
 import { ContainerRuntimeFactoryWithDefaultDataStore } from "@fluidframework/aqueduct";
+import {
+  ICodeLoader,
+  IFluidCodeDetails,
+  IProvideRuntimeFactory,
+} from "@fluidframework/container-definitions";
+import { IProvideFluidDataStoreFactory } from "@fluidframework/runtime-definitions";
+import { FluidEntryPoint } from "./fluidLoader";
 
 export class StorybookCodeLoader implements ICodeLoader {
-  // eslint-disable-next-line no-useless-constructor
-  fluidExport: ContainerRuntimeFactoryWithDefaultDataStore;
+  private readonly entryPoint: FluidEntryPoint;
 
-  constructor(fluidExport: ContainerRuntimeFactoryWithDefaultDataStore) {
-    this.fluidExport = fluidExport;
+  constructor(entryPoint: FluidEntryPoint) {
+    this.entryPoint = entryPoint;
   }
 
-  public load(source: IFluidCodeDetails) {
-    // Normally the "source" parameter would be the package details
-    return Promise.resolve({
-      fluidExport: this.fluidExport,
-    });
+  public async load(source: IFluidCodeDetails) {
+    const factory: Partial<IProvideRuntimeFactory & IProvideFluidDataStoreFactory> =
+            this.entryPoint.fluidExport ?? this.entryPoint;
+
+    const runtimeFactory: IProvideRuntimeFactory =
+        factory.IRuntimeFactory ??
+        new ContainerRuntimeFactoryWithDefaultDataStore("default", [["default", Promise.resolve(factory)]]);
+
+    return { fluidExport: runtimeFactory };
   }
 }

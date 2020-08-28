@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { ClickerContainerFactory } from '../fluidObjects/clicker/clicker';
+import { Clicker, ClickerContainerFactory } from '../fluidObjects/clicker/clicker';
 
 <Meta title="React Demos/Clicker" parameters={{ defaultSrcFile: './src/fluidObjects/clicker/clicker.tsx'}} />
 
@@ -15,7 +15,7 @@ made by different users. `SharedCounter` allows whole numbers to be incremented.
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/counter/sharedcounter/" target="_blank">SharedCounter</a>
 
 <Story name="Demo">
-  <FluidLoader factory={ClickerContainerFactory}></FluidLoader>
+  <FluidLoader entryPoint={ClickerContainerFactory} title={Clicker.DataObjectName}></FluidLoader>
 </Story>
 
 <br /><br />

@@ -72,3 +72,9 @@
         width: 1170px;
     }
 }
+
+/* Pulled from Storybook's build version of index.html - needed for Hugo <link> embed */
+#root[hidden],
+#docs-root[hidden] {
+  display: none !important;
+}

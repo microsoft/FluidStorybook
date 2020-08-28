@@ -1,45 +1,54 @@
 const fs = require('fs');
-const indexHtmlPath = __dirname + '/storybook-static/index.html';
+const inputPath = __dirname + '/storybook-static/index.html';
+const outputPath = __dirname + '/storybook-static/playground.html';
 
-fs.readFile(indexHtmlPath, (err, indexHtml) => {
+fs.readFile(inputPath, (err, inputContent) => {
     if (err) {
       throw err; 
     }
-    if (indexHtml) {
-        const content = extractContent(indexHtml);
-        updateIndexHtml(content);
+    if (inputContent) {
+        extractAndGenerateContent(inputContent);
     }
     else {
         console.log('Unable to find index.html file');
     }
 });
 
-function extractContent(indexHtml) {
-    const content = indexHtml.toString().match(/<head>(?<head>.*?)<\/head><body>(?<body>.*?)<\/body>/s);
-    const head = content.groups.head.replace(/<title>.*?<\/title>|<meta.*\/>/s, '');
-    const body = content.groups.body;
-    return createHugoTemplate(head, body);
-}
+function extractAndGenerateContent(inputContent) {
+    let stylesheetLinks = '';
+    let body = '';
+    const content = inputContent.toString().match(/<head>(?<head>.*?)<\/head>\s*<body>(?<body>.*?)<\/body>/s);
+    const stylesheetLinksContent = content.groups.head.match(/<link\s+rel="stylesheet".*?(>|\/>|<\/link>)/gs);
 
-function updateIndexHtml(content) {
-    fs.writeFile(indexHtmlPath, content, (err) => {
+    if (stylesheetLinksContent && stylesheetLinksContent.length && content.groups) {
+        stylesheetLinks = stylesheetLinksContent.join('\n');
+        // Remove any unnecessary white space (not required - but easier to read output)
+        body = content.groups.body.replace(/\n|\s{2,}/gs, '');
+    }
+    else {
+        const errorMsg = 'Error finding stylesheets or body content!';
+        console.log(errorMsg);
+        throw new Error(errorMsg);
+    }
+
+    const outputContent = createHugoTemplate(stylesheetLinks, body);
+    fs.writeFile(outputPath, outputContent, (err) => {
         if (err) {
             throw err;
         }
-        console.log('index.html updated!');
+        console.log(`UPDATED: ${outputPath}`);
     });
 }
 
-function createHugoTemplate(headerContent, bodyContent) {
+function createHugoTemplate(stylesheetLinks, bodyContent) {
     return `{{ define "header" }}
 {{ partial "header.html" . }}
-${headerContent}
 {{ end }}
-
-
+     
 {{ define "main" }}
-{{ partial "navbarSticky.html" . }}
+{{ partial "navbarSticky.html" . }
 
+${stylesheetLinks}
 ${bodyContent}
 
 {{ block "footer" . -}}{{ end }}
@@ -47,6 +56,6 @@ ${bodyContent}
 {{- if templates.Exists "partials/extra-foot.html" -}}
 {{ partial "extra-foot.html" . }}
 {{- end }}
-
+ 
 {{ end }}`;
 }

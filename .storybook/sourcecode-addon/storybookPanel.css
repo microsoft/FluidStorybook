@@ -8,10 +8,52 @@
 }
 
 .sourcePanel .bp3-control-group :nth-child(3) > span {
-  width: 100%;
+  width: 100% !important;
 }
 
 .sourcePanel .bp3-control-group :nth-child(3) button {
   width: 100%;
   justify-content: left;
+}
+
+.source-code {
+  background-color:#fff !important;
+  width: 100vw;
+  min-height: 100vw;
+}
+
+button.bp3-disabled {
+  background-color: #2c2c32 !important;
+}
+
+.bp3-button:not([class*="bp3-intent-"]) {
+  background-color: #ccc;
+}
+
+.bp3-menu {
+  background-color: #252525;
+  color: #fff;
+}
+
+.bp3-menu-item.bp3-intent-primary.bp3-active {
+  background-color: #20a6fd;
+}
+
+.bp3-input {
+  background-color: #252525;
+  color: #fff;
+}
+
+.bp3-button:not([class*="bp3-intent-"]) {
+  background-image: none;
+  background-color: #252525;
+  color: #fff;
+}
+
+.bp3-button:not([class*="bp3-intent-"]):hover {
+  background-color: #1a1a1a;
+}
+
+.bp3-menu-item::before, .bp3-menu-item > .bp3-icon {
+  color: #2f9c0a;
 }

@@ -1,12 +1,14 @@
+import { Story } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
 import { BadgeContainerFactory } from '../fluidObjects/badge/badgeModel';
 
-<Meta title="React Demos/Badge" component={FluidLoader} />
+<Meta title="React Demos/Badge" parameters={{ defaultSrcFile: './src/fluidObjects/badge/badgeModel.tsx'}} />
 
 # Badge Demo
 
 This example demonstrates how to create a badge data object. It allows multiple
-users to collaborate in real-time on the status of a document.
+users to collaborate in real-time on the status of a document. Select an option from the drop-down
+and you'll see that it is passed in real-time to the other collaborator.
 
 <a href="https://ashy-mud-0acebac10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed Data Structures</a> (DDSs) used include:
 

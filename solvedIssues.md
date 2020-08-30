@@ -10,3 +10,37 @@ https://github.com/mdx-js/mdx/issues/1153
 
 manager = broader UI
 preview = inner guy
+
+## How to add a container around a story
+
+import { addons } from '@storybook/addons';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
+import React from 'react';
+
+export const containerParams = {
+  docs: {
+    container: ({ children, context }) => {
+      const channel = addons.getChannel();
+      channel.emit('sourcecode/selectedStory', context.parameters.fileName);
+      return (
+        <DocsContainer context={context}>
+          <div>{children}</div>
+        </DocsContainer>
+      );
+    }
+  }
+};
+
+{/* <Meta parameters={{
+  docs: {
+    container: ({ children, context }) => {
+      const channel = addons.getChannel();
+      channel.emit('sourcecode/selectedStory', context.parameters.fileName);
+      return (
+        <DocsContainer context={context}>
+          <div>{children}</div>
+        </DocsContainer>
+      );
+    }
+  }
+}} /> */}

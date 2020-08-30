@@ -65,7 +65,7 @@ body .sticky-storm {
   font-family: cursive;       
   padding: 0;
   margin: 0;  
-  font-size: 14px;
+  font-size: 13px;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -159,13 +159,16 @@ button {
 }
 
 .userName {
-  margin-left: auto;
-  align-self: flex-start;
+  flex:none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 55px;
+  margin-right: 40px;
   z-index: 999;
   box-shadow: 0 0.4em 0.6em rgba(0, 0, 0, 0.15);  
   font-weight: bold;
   // margin-left: 2em;
-  margin-top: -15px;
   padding: 0em .5em .2em .5em;
   background: white;
   border-radius: 0.3em;

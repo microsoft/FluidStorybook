@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback } from 'react';
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import createElement from 'react-syntax-highlighter/dist/esm/create-element'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import createElement from 'react-syntax-highlighter/dist/esm/create-element';
 
 const HighlighterInner = props => {
   const { code, language = 'javascript', onLinkClick } = props
@@ -19,11 +19,11 @@ const HighlighterInner = props => {
   )
   return (
     <React.Fragment>
-      <style>{`[data-link-row] { cursor: pointer; background-color: rgba(0,0,255,0.05); border-radius: 4px; } [data-link-row]:hover { box-shadow: 0 0 3px blue; } `}</style>
+      <style>{`[data-link-row] { cursor: pointer; border-radius: 4px; } [data-link-row]:hover { box-shadow: 0 0 3px blue; } `}</style>
       <div className="source-code" onClick={handleLinkClick}>
         <SyntaxHighlighter
-          style={prism}
-          customStyle={{ backgroundColor: 'transparent', fontSize: '0.8em' }}
+          style={coy}
+          customStyle={{ backgroundColor: '#fff', fontSize: '.9em' }}
           language={language}
           renderer={({ rows, stylesheet, useInlineStyles }) => {
             return rows.map((row, i) => {

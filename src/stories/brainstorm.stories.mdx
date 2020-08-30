@@ -1,10 +1,11 @@
+import { Story } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
 import { NoteroContainerFactory } from "../fluidObjects/brainstorm/container"
-import { NoteroView } from "../fluidObjects/brainstorm/view"
+import { NoteroView } from "../fluidObjects/brainstorm/view";
 
-<Meta title="React Demos/Brainstorm" component={FluidLoader} />
+<Meta title="React Demos/Brainstorm" parameters={{ defaultSrcFile: './src/fluidObjects/brainstorm/fluid-object/main.ts'}} />
 
-# Sticky Storm
+# Brainstorm
 
 This example demonstrates how to build a custom idea sharing board. Users can create a "sticky note" with an idea
 on it and then add it to the board. Connected users will automatically see the new sticky note and are able

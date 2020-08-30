@@ -4,27 +4,27 @@ export default create({
   base: 'light',
 
   // UI
-  appBg: 'white',
-  appBorderColor: 'grey',
-  appBorderRadius: 4,
+  appBg: '#2c2c32',
+  appBorderColor: '#fff',
+  appBorderRadius: 0,
 
   // Typography
   fontBase: '"Open Sans", sans-serif',
   fontCode: 'monospace',
 
   // Text colors
-  textColor: 'black',
+  textColor: '#fff',
   textInverseColor: '#fff',
 
   // Toolbar default and active colors
-  barTextColor: '#000',
-  barSelectedColor: '#1AA8E6',
-  barBg: '#efefef',
+  barTextColor: '#fff',
+  barSelectedColor: '#1EA7FD',
+  barBg: '#2c2c32',
 
   // Form colors
-  inputBg: 'white',
-  inputBorder: 'silver',
-  inputTextColor: 'black',
+  inputBg: '#fff',
+  inputBorder: 'yellow',
+  inputTextColor: '#fff',
   inputBorderRadius: 4,
 
   brandTitle: 'Fluid Playground',

@@ -26,7 +26,7 @@ div.sbdocs-content {
     flex-grow: 1; 
     justify-content: space-around; 
     width: 50%; 
-    margin:0 10px;
+    margin-right: 10px;
     box-sizing: border-box; 
     position: relative;
 }
@@ -44,7 +44,7 @@ div.sbdocs-content {
     box-shadow: 0px 2px 3px 0px rgba(50,50,50,0.11);
     text-align: left;
     vertical-align: top;
-    margin: 0 20px;
+    margin-left: 5px;
     animation: zoom 500ms;
     -webkit-animation: zoom 500ms;
 }

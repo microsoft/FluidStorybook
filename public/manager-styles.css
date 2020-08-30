@@ -73,6 +73,27 @@
     }
 }
 
+/* Override sidebar menu. A bit hacky but works. */
+body > div:last-child {
+    background-color: #252525;
+}
+
+#root {
+    border-top: 1px solid #fff;
+}
+
+#about, #release-notes, #shortcuts {
+    display: none;
+}
+
+.react-draggable {
+    background: #3e3e3e;
+}
+
+button[title="Clear search"], button[title="Clear search"]:hover {
+    background: transparent;
+}
+
 /* Pulled from Storybook's build version of index.html - needed for Hugo <link> embed */
 #root[hidden],
 #docs-root[hidden] {

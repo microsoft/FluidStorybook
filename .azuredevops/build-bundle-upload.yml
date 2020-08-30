@@ -50,7 +50,7 @@ stages:
       displayName: Build
       inputs:
         command: 'custom'
-        customCommand: 'run build'
+        customCommand: 'run build:hugo'
 
     - task: ArchiveFiles@2
       inputs:

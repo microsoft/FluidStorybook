@@ -46,11 +46,9 @@ function createHugoTemplate(stylesheetLinks, bodyContent) {
 {{ end }}
      
 {{ define "main" }}
-{{ partial "navbarSticky.html" . }
-
+{{ partial "navbarSticky.html" . }}
 ${stylesheetLinks}
 ${bodyContent}
-
 {{ block "footer" . -}}{{ end }}
 {{- partial "analytics.html" . }}
 {{- if templates.Exists "partials/extra-foot.html" -}}

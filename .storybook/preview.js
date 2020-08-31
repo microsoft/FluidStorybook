@@ -1,10 +1,7 @@
-import { addDecorator } from '@storybook/react'
-import sourceCodeDecorator from './sourcecode-addon/storybookDecorator';
-import codeEditorDecorator from './codeeditor-addon/codeeditorDecorator';
+import sourceCodeDecorator from './sourcecode-addon/sourceCodeDecorator';
 import { storySort } from './storySort';
 
-addDecorator(sourceCodeDecorator);
-addDecorator(codeEditorDecorator);
+export const decorators = [sourceCodeDecorator];
 
 const sortOptions = {
   order: [
@@ -24,6 +21,6 @@ export const parameters = {
     showPanel: false,
     storySort: storySort(sortOptions)
   },
-	// viewMode: 'docs'
+	viewMode: 'docs'
 }
 

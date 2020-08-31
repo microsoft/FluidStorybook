@@ -44,9 +44,9 @@ const SourceCodePanelControls = props => {
           className={`${Classes.TEXT_SMALL} Editor_Menu_Item`}
           key={option}
           icon={
-            <Icon icon={currentlySelected ? 'tick' : 'blank'} iconSize={10} />
+            <Icon icon={currentlySelected ? 'tick' : 'blank'} iconSize={12} />
           }
-          active={modifiers.active}
+          active={currentlySelected}
           text={option}
           shouldDismissPopover={false}
           onClick={handleClick}

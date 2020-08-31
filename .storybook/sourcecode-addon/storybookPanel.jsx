@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import Highlighter from './storybookHighlighter'
-import path from 'path'
-import SourceCodePanelControls from './storybookPanel.controls'
+import React, { useEffect, useState } from 'react';
+import Highlighter from './storybookHighlighter';
+import path from 'path';
+import SourceCodePanelControls from './storybookPanel.controls';
 
 const SourceCodePanel = props => {
   const { channel, rawSources: rawSourcesFromProps } = props;
   const [fileState, setFileState] = useState({ history: [], idx: 0 });
+  const [filteredFiles, setFilteredFiles] = useState([]);
   const filePath = fileState.history[fileState.idx] || '';
   const [rawSources, setRawSources] = useState(rawSourcesFromProps);
   const [showCompiled, setShowCompiled] = useState(false);
@@ -41,9 +42,19 @@ const SourceCodePanel = props => {
   }, [setRawSources]);
 
   useEffect(() => {
-    channel.on('sourcecode/selectedStory', p => {
+    channel.on('sourcecode/selectedStory', path => {
       if (rawSources) {
-        handleFileChange(p, rawSources)
+        handleFileChange(path, rawSources);
+
+        // Filter files shown in drop-down to files associated with the files in the same base folder as "path"
+        if (rawSources) {
+          const filteredPaths = Object.keys(rawSources).filter((file, index) => {
+            // Grab first part of path
+            let firstOfPath = path.split('/').slice(2,4).join('/').toLowerCase();
+            return file.toLowerCase().startsWith(firstOfPath);
+          });
+          setFilteredFiles(filteredPaths);
+        }
       }
     })
     return () => channel.removeListener('sourcecode/selectedStory')
@@ -71,7 +82,7 @@ const SourceCodePanel = props => {
         filePath={filePath}
         fileState={fileState}
         setFileState={setFileState}
-        files={files}
+        files={filteredFiles}
         handleToggleCompiled={handleToggleCompiled}
         handleFileChange={i => handleFileChange(i, rawSources)}
         showCompiled={showCompiled}

@@ -87,7 +87,7 @@ export class AutoNote {
     private static demoText: string[] = [
         "Formal Friday!!!",
         "Free hot stone massages :-)",
-        "An enormous ball pit. Whatever you're imagining, think bigger.",
+        "An enormous ball pit.",
         "At least one meeting free day each week.",
         "An espresso cart at least once a month.",
         "Personal trainer and dietitian on call 24/7",

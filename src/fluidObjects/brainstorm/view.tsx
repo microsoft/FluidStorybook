@@ -184,7 +184,7 @@ function NoteEditor(props: NoteEditorProps) {
   }
 
   return (
-    <div className="note editor">
+    <div className="note note-editor">
       <div
         contentEditable
         className="note-text"

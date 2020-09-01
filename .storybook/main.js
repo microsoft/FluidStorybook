@@ -5,11 +5,8 @@ module.exports = {
   stories: ['../src/**/*.stories.*'],
   addons: [
     '@storybook/preset-create-react-app',
-    '@storybook/addon-viewport/register',
-    '@storybook/addon-links',
     '@storybook/addon-docs', // Enables MDX
     './sourcecode-addon/register'
-    // './codeeditor-addon/register'
   ],
   webpackFinal: async (config) => {
     // Used by sourcecode-addon. Add loader that registers raw source code in a cache and display it in the Source tab.'

@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { FluidObjectName, FluidTable } from '../fluidObjects/table/TableModel';
+import { FluidTable, TableContainerFactory } from '../fluidObjects/table/TableModel';
 
 <Meta title="React Demos/Table" parameters={{ defaultSrcFile: './src/fluidObjects/table/TableModel.tsx'}} />
 
@@ -15,5 +15,5 @@ renaming columns, and updating values in the table.
 
 
 <Story name="Demo">
-  <FluidLoader entryPoint={FluidTable.factory} title={FluidTable.FluidObjectName}></FluidLoader>
+  <FluidLoader factory={TableContainerFactory} title={FluidTable.FluidObjectName}></FluidLoader>
 </Story>

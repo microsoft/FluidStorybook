@@ -6,6 +6,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {
+    ContainerRuntimeFactoryWithDefaultDataStore,
     DataObject,
     DataObjectFactory,
 } from "@fluidframework/aqueduct";
@@ -109,3 +110,8 @@ export class FluidTable extends DataObject implements IFluidTable, IFluidHTMLVie
         this.emit("cellChanged", rowStart, colStart, this.getCell(rowStart, colStart));
     }
 }
+
+export const TableContainerFactory = new ContainerRuntimeFactoryWithDefaultDataStore(
+    FluidTable.FluidObjectName,
+    [[FluidTable.FluidObjectName, Promise.resolve(FluidTable.factory)]]
+  );

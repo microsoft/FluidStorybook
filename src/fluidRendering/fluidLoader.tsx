@@ -5,24 +5,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from "uuid";
 import {
-    IFluidModule,
     IFluidCodeDetails,
     IProvideRuntimeFactory,
 } from "@fluidframework/container-definitions";
 import { Container } from '@fluidframework/container-loader';
-import { IProvideFluidDataStoreFactory } from "@fluidframework/runtime-definitions";
 import { requestFluidObject } from "@fluidframework/runtime-utils";
 import { getLoader, RouteOptions } from './loader';
 import { renderFluidDataObjects } from './renderer';
 
-/**
- * This represents the entry point into the fluid application. This can be a runtime factory, data object factory
- * or a fluid module.
- */
-export type FluidEntryPoint = Partial<IProvideRuntimeFactory & IProvideFluidDataStoreFactory & IFluidModule>;
-
 export interface FluidLoaderProps {
-    entryPoint: FluidEntryPoint,
+    factory: IProvideRuntimeFactory,
     title: string,
     layout?: string,
     view?: any,
@@ -43,12 +35,12 @@ export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) =>
             setTitle(convertToTitle(props.title));
 
             // Create a new Container.
-            const container1 = await createFluidContainer(props.entryPoint, options);
+            const container1 = await createFluidContainer(props.factory, options);
             // Get the Fluid DataObject from the first Container.
             const fluidDataObject1 = await requestFluidObject(container1, dataObjectName);
 
             // Load a second Container from the Container that we created above.
-            const container2 = await loadFluidContainer(props.entryPoint, container1, options);
+            const container2 = await loadFluidContainer(props.factory, container1, options);
             // Get the Fluid DataObject from the second Container.
             const fluidDataObject2 = await requestFluidObject(container2, dataObjectName);
 
@@ -85,35 +77,35 @@ function convertToTitle(value: string) {
     return value;
 }
 
-// A cache of the document id per fluid entry point.
-const documentIdCache = new Map<FluidEntryPoint, string>();
+// A cache of the document id per fluid runtime factory.
+const documentIdCache = new Map<IProvideRuntimeFactory, string>();
 
 /**
  * Creates a Loader and a Container.
- * If we already have a documentId for the given entryPoint, we use it to load an existing Container.
+ * If we already have a documentId for the given factory, we use it to load an existing Container.
  * Otherwise, we create a new Container and attach it.
- * @param entryPoint - The entry point into the fluid data object.
+ * @param factory - The runtime factory for this Container.
  * @param options - The RouteOptions that specify which server to use.
  */
 async function createFluidContainer(
-    entryPoint: FluidEntryPoint,
+    factory: IProvideRuntimeFactory,
     options: RouteOptions,
 ): Promise<Container> {
     // Check if we already have created a document for this Fluid factory in this session. If so, load the
     // existing document instead of creating a new one.
     let createDocument: boolean = false;
-    let documentId = documentIdCache.get(entryPoint);
+    let documentId = documentIdCache.get(factory);
     if (documentId === undefined) {
         // A document does not exist for this session. Create a documentId to be used to create a new document
         // and set the 'createDocument' flag to true.
         documentId = uuid();
-        documentIdCache.set(entryPoint, documentId);
+        documentIdCache.set(factory, documentId);
         createDocument = true;
     }
 
     let container: Container;
     // Create a Loader for the first client.
-    const { loader, urlResolver } = await getLoader(entryPoint, documentId, options);
+    const { loader, urlResolver } = await getLoader(factory, documentId, options);
     // If the 'createDocument' flag is set, create a new container. Otherwise, load an existing one with the 'documentId'.
     if (createDocument) {
         const codeDetails: IFluidCodeDetails = {
@@ -134,16 +126,16 @@ async function createFluidContainer(
 
 /**
  * Creates a Loader and loads an existing Container.
- * @param entryPoint - The entry point into the fluid data object.
+ * @param factory - The runtime factory for this Container.
  * @param fromContainer - The Container from which the new Container is to be created.
  * @param options - The RouteOptions that specify which server to use.
  */
 async function loadFluidContainer(
-    entryPoint: FluidEntryPoint,
+    factory: IProvideRuntimeFactory,
     fromContainer: Container,
     options: RouteOptions,
 ): Promise<Container> {
-    const { loader, urlResolver } = await getLoader(entryPoint, fromContainer.id, options);
+    const { loader, urlResolver } = await getLoader(factory, fromContainer.id, options);
     const documentLoadUrl = await urlResolver.getAbsoluteUrl(fromContainer.resolvedUrl, "");
     const container = await loader.resolve({ url: documentLoadUrl });
 

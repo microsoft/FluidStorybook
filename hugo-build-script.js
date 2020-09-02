@@ -96,7 +96,6 @@ function cleanupContent(stylesheetLinksContent, content) {
 
         // Replace root path with /playground so that https://site.com/playground and https://site.com/playground/ both work
         stylesheetLinks = stylesheetLinks.replace(/href="/g, 'href="/playground/');
-        // body = body.replace(/src="(\.\/)?]/g, 'src="/playground');
         body = body.replace(/src="(\.\/)?/g, 'src="/playground/');
     }
     else {

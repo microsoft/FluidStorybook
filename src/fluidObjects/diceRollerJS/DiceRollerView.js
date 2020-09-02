@@ -31,8 +31,8 @@ export function DiceRollerView(model, contentDiv) {
         contentDiv.appendChild(createButton());
         // Listen for changes to DiceRoller values
         model.on("diceRolled", onDiceRolled);
-        // Trigger initial roll
-        model.roll();
+        // Render initial dice value.
+        onDiceRolled();
     }
 
     const createButton = () => {
@@ -65,7 +65,8 @@ export function DiceRollerView(model, contentDiv) {
 //         model.on("diceRolled", () => this.onDiceRolled());
 //         // To remove listener
 //         // model.off("diceRolled", this.onDiceRolled);
-//         this.model.roll();
+//         // Render initial dice value.
+//         this.onDiceRolled();
 //     }
 
 //     onDiceRolled() {

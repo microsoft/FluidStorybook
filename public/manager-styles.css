@@ -1,9 +1,18 @@
-.sidebar-header a {
+/* Cover sliver that goes along top and to the right */
+#root > div {
+    background-color: #404049;
+}
+
+#root .sidebar-header a {
     font-size: 9pt;
     margin-top: 6px;
 }
 
-.navbar {
+#root .sidebar-container {
+    background-color: #404049;
+}
+
+#root .navbar {
     background-color: #404049;
     height: 50px;
     padding: 10px;
@@ -14,7 +23,7 @@
     font-family: segoe ui, helvetica neue, helvetica, Arial, sans-serif;
 }
 
-.navbar .navbar-brand {
+#root .navbar .navbar-brand {
     font-size: 20px;
     letter-spacing: -.04rem;
     color: #fff;
@@ -25,24 +34,24 @@
     text-decoration: none;
 }
 
-.navbar nav {
+#root .navbar nav {
     padding-right: 15px;
     padding-left: 25px;
     margin-right: auto;
     margin-left: auto;
 }
 
-.navbar ul {
+#root .navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.navbar li {
+#root .navbar li {
     float: left;
 }
 
-.navbar li a {
+#root .navbar li a {
     display: block;
     padding-left: 25px;
     padding-top: 6px;
@@ -51,24 +60,24 @@
     text-decoration: none;
 }
 
-.navbar li a:hover {
+#root .navbar li a:hover {
     opacity: 1;
 }
 
 @media (min-width: 768px) {
-    .navbar nav {
+    #root .navbar nav {
         width: 750px;
     }
 }
 
 @media (min-width: 992px) {
-    .navbar nav {
+    #root .navbar nav {
         width: 970px;
     }
 }
 
 @media (min-width: 1200px) {
-    .navbar nav {
+    #root .navbar nav {
         width: 1170px;
     }
 }

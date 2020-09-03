@@ -6,14 +6,20 @@ import { ClickerContainerFactory } from '../fluidObjects/clicker/clicker';
 
 # Clicker Demo
 
-This example demonstrates how to create a clicker data object used in real-time collaboration. The data object
+This example demonstrates a clicker Fluid object used in real-time collaboration. The Fluid object
 uses the `SharedCounter` DDS located in the `@fluidframework/counter` package to keep track of clicks
-made by different users. `SharedCounter` allows for whole numbers to be incremented.
+made by different users. `SharedCounter` allows whole numbers to be incremented.
 
-<a href="https://ashy-mud-0acebac10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed Data Structures</a> (DDSs) used include:
+<a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed data structures</a> (DDSes) used include:
 
-* <a href="https://ashy-mud-0acebac10.azurestaticapps.net/apis/counter/sharedcounter/" target="_blank">SharedCounter</a>
+* <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/counter/sharedcounter/" target="_blank">SharedCounter</a>
 
 <Story name="Demo">
   <FluidLoader factory={ClickerContainerFactory}></FluidLoader>
 </Story>
+
+<br /><br />
+
+### Additional Resources
+
+* <a href="https://github.com/microsoft/FluidFramework/tree/main/examples/data-objects/clicker" target="_blank">Clicker Repository</a>

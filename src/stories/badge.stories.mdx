@@ -6,16 +6,22 @@ import { BadgeContainerFactory } from '../fluidObjects/badge/badgeModel';
 
 # Badge Demo
 
-This example demonstrates how to create a badge data object. It allows multiple
+This example demonstrates a badge data object that can be used to collaboratively update the status of a document. It allows multiple
 users to collaborate in real-time on the status of a document. Select an option from the drop-down
 and you'll see that it is passed in real-time to the other collaborator.
 
-<a href="https://ashy-mud-0acebac10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed Data Structures</a> (DDSs) used include:
+<a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed data structures</a> (DDSes) used include:
 
-* <a href="https://ashy-mud-0acebac10.azurestaticapps.net/apis/map/sharedmap/" target="_blank">SharedMap</a>
-* <a href="https://ashy-mud-0acebac10.azurestaticapps.net/apis/cell/sharedcell/" target="_blank">SharedCell</a>
-* <a href="https://ashy-mud-0acebac10.azurestaticapps.net/apis/sequence/sharedobjectsequence/" target="_blank">SharedObjectSequence</a>
+* <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/sharedmap/" target="_blank">SharedMap</a>
+* <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/cell/sharedcell/" target="_blank">SharedCell</a>
+* <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/sequence/sharedobjectsequence/" target="_blank">SharedObjectSequence</a>
 
 <Story name="Demo">
   <FluidLoader factory={BadgeContainerFactory}></FluidLoader>
 </Story>
+
+<br /><br />
+
+### Additional Resources
+
+* <a href="https://github.com/microsoft/FluidFramework/tree/main/examples/data-objects/badge" target="_blank">Badge Repository</a>

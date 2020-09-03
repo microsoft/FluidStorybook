@@ -116,6 +116,8 @@ div.sbdocs-content {
 .browser div.body {
     padding: 16px;
     font: 11px "Lucida Grande", "Open Sans";
+    overflow-x: auto;
+    text-align: center;
 }
 
 .window .windows {

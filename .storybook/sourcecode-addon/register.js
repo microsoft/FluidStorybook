@@ -10,7 +10,8 @@ addons.register('fluid/sourcecode-addon', storybookAPI => {
   let rawSources;
   // making the source code available
   function fetchSources() {
-    fetch('./rawSources.json')
+    const rootPath = (window.location.host.startsWith('localhost')) ? './' : '/playground/';
+    fetch(rootPath + 'rawSources.json')
       .then(response => response.json())
       .then(data => {
         if (!rawSources || currentId !== data.id) {

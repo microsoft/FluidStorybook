@@ -25,6 +25,7 @@ const HighlighterInner = props => {
           style={coy}
           customStyle={{ backgroundColor: '#fff', fontSize: '.9em' }}
           language={language}
+          showLineNumbers="true"
           renderer={({ rows, stylesheet, useInlineStyles }) => {
             return rows.map((row, i) => {
               const children = row.children.map(mapChild)

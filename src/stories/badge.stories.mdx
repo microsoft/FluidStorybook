@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
-import { BadgeContainerFactory } from '../fluidObjects/badge/badgeModel';
+import { Badge, BadgeContainerFactory } from '../fluidObjects/badge/badgeModel';
 
 <Meta title="React Demos/Badge" parameters={{ defaultSrcFile: './src/fluidObjects/badge/badgeModel.tsx'}} />
 
@@ -17,7 +17,7 @@ and you'll see that it is passed in real-time to the other collaborator.
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/sequence/sharedobjectsequence/" target="_blank">SharedObjectSequence</a>
 
 <Story name="Demo">
-  <FluidLoader factory={BadgeContainerFactory}></FluidLoader>
+  <FluidLoader factory={BadgeContainerFactory} title={Badge.factory.type}></FluidLoader>
 </Story>
 
 <br /><br />

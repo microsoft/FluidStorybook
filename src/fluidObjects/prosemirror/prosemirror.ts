@@ -19,7 +19,7 @@ import {
     reservedRangeLabelsKey,
     createMap,
 } from "@fluidframework/merge-tree";
-import { IFluidDataStoreContext, IFluidDataStoreFactory } from "@fluidframework/runtime-definitions";
+import { IFluidDataStoreContext, IFluidDataStoreFactory, IFluidDataStoreChannel } from "@fluidframework/runtime-definitions";
 import { IFluidDataStoreRuntime, IChannelFactory } from "@fluidframework/datastore-definitions";
 import { SharedString } from "@fluidframework/sequence";
 import { IFluidHTMLOptions, IFluidHTMLView } from "@fluidframework/view-interfaces";
@@ -173,8 +173,7 @@ class ProseMirrorFactory implements IFluidDataStoreFactory {
     public readonly type = ProseMirrorFactory.type;
 
     public get IFluidDataStoreFactory() { return this; }
-
-    public instantiateDataStore(context: IFluidDataStoreContext): void {
+    public instantiateDataStore(context: IFluidDataStoreContext): Promise<IFluidDataStoreChannel> {
         const dataTypes = new Map<string, IChannelFactory>();
         const mapFactory = SharedMap.getFactory();
         const sequenceFactory = SharedString.getFactory();
@@ -192,6 +191,7 @@ class ProseMirrorFactory implements IFluidDataStoreFactory {
             const proseMirror = await proseMirrorP;
             return proseMirror.request(request);
         });
+        return Promise.resolve(runtime);
     }
 }
 

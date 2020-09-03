@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/addon-docs/blocks';
 import { FluidLoader } from '../fluidRendering/fluidLoader';
+import { DiceRoller } from '../fluidObjects/diceRoller/DiceRoller';
 import { DiceRollerContainer } from '../fluidObjects/diceRoller/DiceRollerContainer';
 import { DiceRollerView } from '../fluidObjects/diceRoller/DiceRollerView';
 
@@ -16,7 +17,7 @@ TypeScript and React to render the output. Another example that uses vanilla Jav
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/shareddirectory/" target="_blank">SharedDirectory</a>
 
 <Story name="Demo">
-  <FluidLoader factory={DiceRollerContainer} view={DiceRollerView} viewType="react"></FluidLoader>
+  <FluidLoader factory={DiceRollerContainer} title={DiceRoller.DataObjectName} view={DiceRollerView} viewType="react"></FluidLoader>
 </Story>
 
 <br /><br />

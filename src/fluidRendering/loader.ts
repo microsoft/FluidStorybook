@@ -2,10 +2,8 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
-import { ContainerRuntimeFactoryWithDefaultDataStore } from '@fluidframework/aqueduct';
-import { IProxyLoaderFactory } from "@fluidframework/container-definitions";
+import { IProvideRuntimeFactory, IProxyLoaderFactory } from "@fluidframework/container-definitions";
 import { Loader } from '@fluidframework/container-loader';
-
 import { getDocumentServiceFactory } from "./multiDocumentServiceFactory";
 import { MultiUrlResolver } from "./multiResolver";
 import { StorybookCodeLoader } from './storybookCodeLoader';
@@ -23,13 +21,13 @@ export type RouteOptions =
     | ITinyliciousRouteOptions;
 
 export async function getLoader(
-    fluidExport: ContainerRuntimeFactoryWithDefaultDataStore,
+    factory: IProvideRuntimeFactory,
     documentId: string,
     options: RouteOptions,
 ) {
     const urlResolver = new MultiUrlResolver(window.location.origin, documentId, options);
 
-    const codeLoader = new StorybookCodeLoader(fluidExport);
+    const codeLoader = new StorybookCodeLoader(factory);
     const documentServiceFactory = getDocumentServiceFactory(documentId, options);
     const loader = new Loader(
         urlResolver,

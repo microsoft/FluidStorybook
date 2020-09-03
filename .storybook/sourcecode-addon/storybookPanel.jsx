@@ -27,22 +27,23 @@ const SourceCodePanel = props => {
       }
     }
   }
-  
+
   const handleToggleCompiled = () => setShowCompiled(!showCompiled);
 
   useEffect(() => {
-    channel.on('sourceCode/rawSources', newRawSources => {
+    const onRawSources = newRawSources => {
       channel.removeListener('sourceCode/rawSources')
       setRawSources(newRawSources)
       if (filePath) {
         handleFileChange(filePath, newRawSources)
       }
-    })
-    return () => channel.removeListener('sourceCode/rawSources')
+    }
+    channel.on('sourceCode/rawSources', onRawSources)
+    return () => channel.removeListener('sourceCode/rawSources', onRawSources)
   }, [setRawSources]);
 
   useEffect(() => {
-    channel.on('sourcecode/selectedStory', path => {
+    const onSelectedStory = path => {
       if (rawSources) {
         handleFileChange(path, rawSources);
 
@@ -50,14 +51,15 @@ const SourceCodePanel = props => {
         if (rawSources) {
           const filteredPaths = Object.keys(rawSources).filter((file, index) => {
             // Grab first part of path
-            let firstOfPath = path.split('/').slice(2,4).join('/').toLowerCase();
+            let firstOfPath = path.split('/').slice(2, 4).join('/').toLowerCase();
             return file.toLowerCase().startsWith(firstOfPath);
           });
           setFilteredFiles(filteredPaths);
         }
       }
-    })
-    return () => channel.removeListener('sourcecode/selectedStory')
+    }
+    channel.on('sourcecode/selectedStory', onSelectedStory)
+    return () => channel.removeListener('sourcecode/selectedStory', onSelectedStory)
   }, [rawSources]);
 
   if (!props.active) return null;

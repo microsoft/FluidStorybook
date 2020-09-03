@@ -23,7 +23,7 @@
 }
 
 button.bp3-disabled {
-  background-color: #2c2c32 !important;
+  background-color: #404049 !important;
 }
 
 .bp3-button:not([class*="bp3-intent-"]) {

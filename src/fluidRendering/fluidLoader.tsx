@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { v4 as uuid } from "uuid";
 import {
     IFluidCodeDetails,
@@ -23,7 +23,7 @@ export interface FluidLoaderProps {
 
 export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) => { 
     const fluidNodeRef = useRef<HTMLDivElement>(null);
-    const [title, setTitle] = useState("");
+    // const [title, setTitle] = useState("");
 
     useEffect(() => {
         async function render() {
@@ -32,7 +32,6 @@ export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) =>
             // For example in DiceRoller you could use "@fluid-example/dice-roller"
             const dataObjectName = "";
             let options: RouteOptions = { mode: "local" };
-            setTitle(convertToTitle(props.title));
 
             // Create a new Container.
             const container1 = await createFluidContainer(props.factory, options);
@@ -60,21 +59,6 @@ export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) =>
         </div>
     );
 };
-
-function convertToTitle(value: string) {
-    if (value) {
-        value = value.replace('@fluid-example/', '');
-        value = value.replace(/-/g, ' ');
-        let splitWords = value.split(' ');
-        if (splitWords.length) {
-            for (let i=0;i<splitWords.length;i++) {
-                splitWords[i] = splitWords[i].charAt(0).toUpperCase() + splitWords[i].slice(1);
-            }
-            return splitWords.join(' ');
-        }
-    }
-    return value;
-}
 
 // A cache of the document id per fluid runtime factory.
 const documentIdCache = new Map<IProvideRuntimeFactory, string>();
@@ -140,3 +124,19 @@ async function loadFluidContainer(
 
     return container;
 }
+
+// LEAVE THE FOLLOWING FUNCTION
+// function convertToTitle(value: string) {
+//     if (value) {
+//         value = value.replace('@fluid-example/', '');
+//         value = value.replace(/-/g, ' ');
+//         let splitWords = value.split(' ');
+//         if (splitWords.length) {
+//             for (let i=0;i<splitWords.length;i++) {
+//                 splitWords[i] = splitWords[i].charAt(0).toUpperCase() + splitWords[i].slice(1);
+//             }
+//             return splitWords.join(' ');
+//         }
+//     }
+//     return value;
+// }

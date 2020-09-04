@@ -87,6 +87,17 @@ const getOptions = () => {
     return [...model.optionsMap.values()];
 };
 
+...
+
+// Handling DDS changes
+React.useEffect(() => {
+    // Watch for Fluid data updates and update React state
+    model.currentCell.on("valueChanged", () => {
+        setSelectedOption(getSelectedOptionKey());
+        setHistoryItems(getHistoryItems());
+    });
+}, [getHistoryItems, getSelectedOptionKey, model.currentCell]);
+
 ```
 
 ### Additional Resources

@@ -20,6 +20,36 @@ between multiple rich-text editors.
 
 <br /><br />
 
+### Code Highlights
+
+Here are a few highlights of how SharedMap and SharedString are used in this example. Click the **Source** tab above to 
+view all of the code.
+
+```typescript
+// prosemirror/prosemirror.ts
+// Define DDS properties
+public text!: SharedString;
+private root!: ISharedMap;
+
+...
+
+// Creating DDSes
+this.root = SharedMap.create(this.runtime, "root");
+const text = SharedString.create(this.runtime);
+this.root.set("text", text.handle);
+
+...
+
+// Accessing DDSes
+this.root = await this.runtime.getChannel("root") as ISharedMap;
+this.text = await this.root.get<IFluidHandle<SharedString>>("text").get();
+
+...
+
+// Using DDSes
+text.insertText(1, "Hello, world!");
+```
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidFramework/tree/main/examples/data-objects/prosemirror" target="_blank">ProseMirror Repository</a>

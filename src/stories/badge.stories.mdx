@@ -22,6 +22,73 @@ and you'll see that it is passed in real-time to the other collaborator.
 
 <br /><br />
 
+### Code Highlights
+
+Here are a few highlights of how SharedMap, SharedCell, and SharedObjectSequence are used in this example. Click the **Source** tab above to 
+view all of the code.
+
+```typescript
+// badge/badgeModel.ts
+
+// Define DDS properties
+currentCell!: SharedCell;
+optionsMap!: SharedMap;
+historySequence!: SharedObjectSequence<IBadgeHistory>;
+
+...
+
+// Creating DDSes
+protected async initializingFirstTime() {
+    // Create a cell to represent the Badge's current state
+    const current = SharedCell.create(this.runtime);
+    this.root.set(this.currentId, current.handle);
+
+    // Create a map to represent the options for the Badge
+    const options = SharedMap.create(this.runtime);
+    this.root.set(this.optionsId, options.handle);
+
+    // Create a sequence to store the badge's history
+    const badgeHistory = SharedObjectSequence.create<IBadgeHistory>(this.runtime);
+    this.root.set(this.historyId, badgeHistory.handle);
+}
+
+...
+
+// Accessing DDSes
+protected async hasInitialized() {
+    [ this.currentCell, this.optionsMap, this.historySequence ] = await Promise.all([
+        this.root.get<IFluidHandle<SharedCell>>(this.currentId).get(),
+        this.root.get<IFluidHandle<SharedMap>>(this.optionsId).get(),
+        this.root.get<IFluidHandle<SharedObjectSequence<IBadgeHistory>>>(this.historyId).get(),
+    ]);
+}
+
+...
+
+// Using DDSes - badge/badgeClient.tsx
+const changeSelectedOption = (newItem: IBadgeType): void => {
+    if (newItem.key !== model.currentCell.get().key) {
+        // SharedObjectSequence DDS
+        const len = model.historySequence.getItemCount();
+        model.historySequence.insert(len, [
+            {
+                value: newItem,
+                timestamp: new Date(),
+            },
+        ]);
+        // SharedCell DDS
+        model.currentCell.set(newItem);
+    }
+};
+
+const getOptions = () => {
+    // SharedMap DDS
+    // Spread iterable out into an array
+    return [...model.optionsMap.values()];
+};
+
+```
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidFramework/tree/main/examples/data-objects/badge" target="_blank">Badge Repository</a>

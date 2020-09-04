@@ -18,6 +18,44 @@ This example allows multiple users to collaborate in real-time on a game of Sudo
 
 <br /><br />
 
+### Code Highlights
+
+Here are a few highlights of how SharedMap is used in this example. Click the **Source** tab above to 
+view all of the code.
+
+```typescript
+// brainstorm/fluid-object/main.ts
+// Define DDS property
+private notesMap: SharedMap;
+
+...
+
+// Create a DDS
+const map = SharedMap.create(this.runtime);
+
+...
+
+// Accessing a DDS
+this.puzzle = await this.root.get<IFluidHandle<ISharedMap>>(this.sudokuMapKey).get();
+
+...
+
+// Using a DDS
+export function loadPuzzle(index: number, puzzleMap: ISharedMap): number[][] {
+    const puzzleInput = PUZZLES[index];
+    const solution = sudoku.solve(puzzleInput);
+
+    for (const row of PUZZLE_INDEXES) {
+        for (const col of PUZZLE_INDEXES) {
+            const key = Coordinate.asString(row, col);
+            const cell = new SudokuCell(puzzleInput[row][col], solution[row][col], key);
+            puzzleMap.set(key, cell);
+        }
+    }
+    return solution;
+}
+```
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidExamples" target="_blank">Sudoku Repository</a>

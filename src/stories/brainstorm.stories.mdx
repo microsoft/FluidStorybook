@@ -25,6 +25,45 @@ vote on the proposed sticky note ideas and can highlight their own ideas.
 
 <br /><br />
 
+### Code Highlights
+
+Here's how SharedMap is used in Brainstorm.
+
+```typescript
+// brainstorm/fluid-object/main.ts
+// Define a SharedMap for notes
+private notesMap: SharedMap;
+
+...
+
+// Creating a SharedMap
+private createSharedMap(id: string): void {
+    const map = SharedMap.create(this.runtime);
+    this.root.set(id, map.handle);
+}
+
+this.createSharedMap('notes');
+
+...
+
+// Access a SharedMap that has been created
+this.notesMap = await this.root.get<IFluidHandle<SharedMap>>("notes").get();
+
+...
+
+// Set a note value on the SharedMap
+public createNote = (text: string): void => {
+  const note: INote = {
+      id: uuidv4(),
+      text: text,
+      user: this.getUser()
+  };
+  this.notesMap.set(note.id, note);
+}
+
+```
+
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidExamples" target="_blank">Brainstorm Repository</a>

@@ -16,7 +16,6 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 // eslint-disable-next-line import/no-unassigned-import
 import "./styles.css";
-import { ISharedMap } from "@fluidframework/map";
 
 const imageGalleryName = "@fluid-example/image-gallery";
 
@@ -54,7 +53,6 @@ export class ImageGalleryComponent extends DataObject implements IFluidHTMLView 
     };
 
     imageGallery: ImageGallery | undefined;
-    images: ISharedMap | undefined;
 
     onSlide = (index: number) => {
         this.root.set("position", index);
@@ -86,9 +84,6 @@ export class ImageGalleryComponent extends DataObject implements IFluidHTMLView 
         }
 
         this.root.on("valueChanged", (_, local) => {
-            // if (local) {
-            //     return;
-            // }
             const position = this.root.get<number>("position");
             if (this.imageGallery !== undefined) {
                 // This is a result of a remote slide, don't trigger onSlide for this slide

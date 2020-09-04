@@ -54,6 +54,15 @@ export function loadPuzzle(index: number, puzzleMap: ISharedMap): number[][] {
     }
     return solution;
 }
+
+...
+
+// Handling DDS changes
+protected async hasInitialized() {
+    this.puzzle.on("valueChanged", (changed, local, op) => {
+        this.render();
+    });
+}
 ```
 
 ### Additional Resources

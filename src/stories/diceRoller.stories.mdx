@@ -50,6 +50,17 @@ public readonly roll = () => {
     const rollValue = Math.floor(Math.random() * 6) + 1;
     this.root.set(diceValueKey, rollValue);
 };
+
+...
+
+// Handling DDS changes
+protected async hasInitialized() {
+    this.root.on("valueChanged", (changed: IValueChanged) => {
+        if (changed.key === diceValueKey) {
+            this.emit("diceRolled");
+        }
+    });
+}
 ```
 
 ### Additional Resources

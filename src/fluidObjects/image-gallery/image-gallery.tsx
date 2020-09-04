@@ -16,7 +16,6 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 // eslint-disable-next-line import/no-unassigned-import
 import "./styles.css";
-import { ISharedMap } from "@fluidframework/map";
 
 const imageGalleryName = "@fluid-example/image-gallery";
 

@@ -61,6 +61,16 @@ public createNote = (text: string): void => {
   this.notesMap.set(note.id, note);
 }
 
+...
+
+// Handling DDS changes
+private createEventListeners(sharedMap: SharedMap): void {
+    // Set up an event listener for changes to values in the SharedMap
+    sharedMap.on("valueChanged", () => {
+        this.emit("change");
+    });
+}
+
 ```
 
 

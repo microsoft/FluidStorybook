@@ -20,6 +20,37 @@ clients will automatically be updated and stay in sync.
 
 <br /><br />
 
+### Code Highlights
+
+Here's how SharedMap is used in this example.
+
+```typescript
+// image-gallery.tsx
+// Root DDS creation is done by DataObject class
+export class ImageGalleryComponent extends DataObject implements IFluidHTMLView
+
+...
+
+// Accessing DDSes
+this.root.get("position");
+
+...
+
+// Changing DDSes
+onSlide = (index: number) => {
+    this.root.set("position", index);
+};
+
+...
+
+// Receiving Change Event on DDSes 
+this.root.on("valueChanged", (_, local) => {
+    const position = this.root.get<number>("position");
+    ...
+}
+
+```
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidFramework/tree/main/examples/data-objects/image-gallery" target="_blank">Image Gallery Repository</a>

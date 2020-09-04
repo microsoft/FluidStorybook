@@ -20,6 +20,45 @@ between multiple rich-text editors.
 
 <br /><br />
 
+### Code Highlights
+
+Here's how SharedString is used in this example.
+
+```typescript
+// fluid-object/FluidDraftJs.tsx
+// Define SharedString property
+public text: SharedString | undefined;
+
+...
+
+// Creating DDSes
+const text = SharedString.create(this.runtime);
+insertBlockStart(text, 0);
+text.insertText(text.getLength(), "starting text");
+this.root.set("text", text.handle);
+
+...
+
+// Accessing DDSes - SharedString is passed to Fluid Editor React Component
+<FluidEditor
+    sharedString={props.model.text}
+/>
+
+// Changing DDSes
+this.props.sharedString.insertText(start, insertedText, styleProp);
+this.props.sharedString.replaceText(start, end, insertedText, styleProp);
+
+...
+
+// Receiving Change Event on DDSes - view/FluidEditor.tsx
+this.props.sharedString.on("sequenceDelta", (event: SequenceDeltaEvent) => {
+...
+    const updateSelectionRange = (textRange: TextRange) => updateTextRange(event.ranges, textRange);
+    this.updateEditorState(updateSelectionRange);
+...
+}
+```
+
 ### Additional Resources
 
 * <a href="https://github.com/microsoft/FluidExamples" target="_blank">draft-js Repository</a>

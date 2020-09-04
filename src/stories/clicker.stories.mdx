@@ -43,9 +43,12 @@ protected async initializingFirstTime() {
 const counterHandle = this.root.get<IFluidHandle<SharedCounter>>(counterKey);
 this._counter = await counterHandle.get();
 
+...
 
 // Changing DDSes
 <button style={{fontSize: 20}} onClick={() => { this.props.counter.increment(1); }}>+</button>
+
+...
 
 // Receiving Change Event on DDSes 
 this.props.counter.on("incremented", (incrementValue: number, currentValue: number) => {

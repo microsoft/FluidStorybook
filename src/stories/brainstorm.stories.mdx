@@ -15,7 +15,7 @@ on it and then add it to the board. Connected users will automatically see the n
 to create and share sticky notes of their own. As notes are added, all connected users can
 vote on the proposed sticky note ideas and can highlight their own ideas.
 
-<a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed data structures</a> (DDSes) used include:
+<a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/docs/concepts/dds/" target="_blank">Distributed data structures</a> used include:
 
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/apis/map/sharedmap/" target="_blank">SharedMap</a>
 
@@ -27,16 +27,16 @@ vote on the proposed sticky note ideas and can highlight their own ideas.
 
 ### Code Highlights
 
-Here's how SharedMap is used in Brainstorm.
+Here are a few highlights of how SharedMap is used in this example. Click the **Source** tab above to view all of the code.
 
 ```typescript
 // brainstorm/fluid-object/main.ts
-// Define a SharedMap for notes
+// Define DDS property
 private notesMap: SharedMap;
 
 ...
 
-// Creating a SharedMap
+// Create a DDS
 private createSharedMap(id: string): void {
     const map = SharedMap.create(this.runtime);
     this.root.set(id, map.handle);
@@ -46,12 +46,12 @@ this.createSharedMap('notes');
 
 ...
 
-// Access a SharedMap that has been created
+// Accessing a DDS
 this.notesMap = await this.root.get<IFluidHandle<SharedMap>>("notes").get();
 
 ...
 
-// Set a note value on the SharedMap
+// Using a DDS
 public createNote = (text: string): void => {
   const note: INote = {
       id: uuidv4(),

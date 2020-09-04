@@ -19,3 +19,33 @@ uses JavaScript and the DOM to render the output.
 <Story name="Demo">
     <FluidLoader factory={DiceRollerContainer} title={DiceRoller.DataObjectName} view={DiceRollerView} viewType="js"></FluidLoader>
 </Story>
+
+### Code Highlights
+
+Here are a few highlights of how SharedMap is used in this example. Click the **Source** tab above to 
+view all of the code.
+
+```typescript
+/* 
+ * diceRoller/DiceRoller.js
+ * This example uses the DataObject's `root` property which is a SharedDirectory DDS
+ * The `diceValueKey` property below is used to get/set values on the SharedDirectory
+ */
+const diceValueKey = "diceValueKey";
+
+...
+
+// Accessing and using SharedDirectory
+protected async initializingFirstTime() {
+    this.root.set(diceValueKey, 1);
+}
+
+public get value(): number {
+    return this.root.get(diceValueKey);
+}
+
+public readonly roll = () => {
+    const rollValue = Math.floor(Math.random() * 6) + 1;
+    this.root.set(diceValueKey, rollValue);
+};
+```

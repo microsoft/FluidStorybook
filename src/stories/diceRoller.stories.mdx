@@ -22,6 +22,36 @@ TypeScript and React to render the output. Another example that uses vanilla Jav
 
 <br /><br />
 
+### Code Highlights
+
+Here are a few highlights of how SharedMap is used in this example. Click the **Source** tab above to 
+view all of the code.
+
+```typescript
+/* 
+ * diceRoller/DiceRoller.ts
+ * This example uses the DataObject's `root` property which is a SharedDirectory DDS
+ * The `diceValueKey` property below is used to get/set values on the SharedDirectory
+ */
+const diceValueKey = "diceValueKey";
+
+...
+
+// Accessing and using SharedDirectory
+protected async initializingFirstTime() {
+    this.root.set(diceValueKey, 1);
+}
+
+public get value(): number {
+    return this.root.get(diceValueKey);
+}
+
+public readonly roll = () => {
+    const rollValue = Math.floor(Math.random() * 6) + 1;
+    this.root.set(diceValueKey, rollValue);
+};
+```
+
 ### Additional Resources
 
 * <a href="https://agreeable-hill-0eeff5b10.azurestaticapps.net/docs/get-started/quick-start/" target="_blank">Dice Roller Quick Start</a>

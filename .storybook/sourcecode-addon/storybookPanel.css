@@ -20,6 +20,11 @@
   background-color:#fff !important;
   width: 100vw;
   min-height: 100vw;
+  margin-bottom: 200px;
+}
+
+.source-code pre {
+  border-bottom: 1px solid #fff;
 }
 
 button.bp3-disabled {

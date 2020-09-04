@@ -23,7 +23,6 @@ export interface FluidLoaderProps {
 
 export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) => { 
     const fluidNodeRef = useRef<HTMLDivElement>(null);
-    // const [title, setTitle] = useState("");
 
     useEffect(() => {
         async function render() {

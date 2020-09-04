@@ -55,7 +55,6 @@ export const FluidLoader = (props: React.PropsWithChildren<FluidLoaderProps>) =>
     // Return initial HTML. Fluid node will be appended after useEffect is processed.
     return (
         <div id="fluid-container">
-            <h1>{title}</h1>
             <br />
             <div ref={fluidNodeRef}></div>
         </div>

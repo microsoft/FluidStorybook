@@ -3,4 +3,5 @@ import fluidTheme from './fluid-theme';
 
 addons.setConfig({
   theme: fluidTheme,
+  showRoots: true
 });

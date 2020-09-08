@@ -32,6 +32,12 @@ steps:
     customCommand: 'install'
 
 - task: Npm@1
+  displayName: Policy Check
+  inputs:
+    command: 'custom'
+    customCommand: 'run policy-check'
+
+- task: Npm@1
   displayName: Build
   inputs:
     command: 'custom'

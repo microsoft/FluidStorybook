@@ -138,7 +138,7 @@ if (location.href.indexOf('/playground') === -1) {
         var name = scripts[i];
         var path = '/playground/' + name;
 
-        var script = document.createElement('link');
+        const script = document.createElement('link');
         script.id = name;
         script.href = path;
         script.rel = "prefetch";

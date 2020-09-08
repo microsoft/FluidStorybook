@@ -13,11 +13,6 @@ const sortOptions = {
 
 export const parameters = {
   options: {
-    /**
-     * display the top-level grouping as a "root" in the sidebar
-     * @type {Boolean}
-     */
-    showRoots: true,
     showPanel: false,
     storySort: storySort(sortOptions)
   },

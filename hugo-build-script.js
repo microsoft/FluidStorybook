@@ -93,10 +93,6 @@ function cleanupContent(stylesheetLinksContent, content) {
         stylesheetLinks = stylesheetLinksContent.join('\n');
         // Remove any unnecessary white space (not required - but easier to read output)
         body = content.groups.body.replace(/\n|\s{2,}/gs, '');
-
-        // Replace root path with /playground so that https://site.com/playground and https://site.com/playground/ both work
-        stylesheetLinks = stylesheetLinks.replace(/href="/g, 'href="/playground/');
-        body = body.replace(/src="(\.\/)?/g, 'src="/playground/');
     }
     else {
         const errorMsg = 'Error finding stylesheets or body content!';
@@ -113,6 +109,11 @@ function createHugoTemplate(stylesheetLinks, bodyContent) {
      
 {{ define "main" }}
 {{ partial "navbarSticky.html" . }}
+<script>
+  var base = document.createElement('base');
+  base.href = '/playground/';
+  document.getElementsByTagName('head')[0].appendChild(base);
+</script>
 ${stylesheetLinks}
 ${bodyContent}
 {{ block "footer" . -}}{{ end }}
@@ -127,14 +128,22 @@ ${bodyContent}
 function createJSCacheScript(hashedBundles) {
     return `// Cache scripts for performance
 if (location.href.indexOf('/playground') === -1) {
+    var fetchEnabled = ('fetch' in window);
     var scripts = [ 'sb_dll/storybook_ui_dll.js', 'sb_dll/storybook_docs_dll.js', '${hashedBundles.join('\',\'')}' ];
     for (var i=0;i<scripts.length;i++) {
         var name = scripts[i];
-        var script = document.createElement('script');
-        script.id = name;
-        script.async = true;
-        script.src = '/playground/' + name;
-        document.body.appendChild(script);
+        var path = '/playground/' + name;
+        if (fetchEnabled) {
+            fetch(path)
+            .catch(function(error) {});
+        }
+        else {
+            var script = document.createElement('script');
+            script.id = name;
+            script.async = true;
+            script.src = path;
+            document.body.appendChild(script);
+        }
     }
 }`;
 }

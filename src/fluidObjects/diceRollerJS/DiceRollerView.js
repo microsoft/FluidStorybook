@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 /**
  * The entirety of the View logic is encapsulated within the App.
  * The App uses the provided model to interact with Fluid.

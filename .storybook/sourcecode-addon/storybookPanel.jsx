@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import React, { useEffect, useState } from 'react';
 import Highlighter from './storybookHighlighter';
 import path from 'path';

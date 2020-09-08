@@ -1,4 +1,4 @@
-# Fluid Storybook
+# fluidstorybook
 
 This project provides "stories" for different Fluid examples. In addition to being able to view the rendered Fluid Objects, a source code viewer is also included to make it easy to see how the Fluid Objects works.
 

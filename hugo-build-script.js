@@ -133,22 +133,16 @@ ${bodyContent}
 function createJSCacheScript(hashedBundles) {
     return `// Cache scripts for performance
 if (location.href.indexOf('/playground') === -1) {
-    var fetchEnabled = ('fetch' in window);
     var scripts = [ 'sb_dll/storybook_ui_dll.js', 'sb_dll/storybook_docs_dll.js', '${hashedBundles.join('\',\'')}' ];
     for (var i=0;i<scripts.length;i++) {
         var name = scripts[i];
         var path = '/playground/' + name;
-        if (fetchEnabled) {
-            fetch(path)
-            .catch(function(error) {});
-        }
-        else {
-            var script = document.createElement('script');
-            script.id = name;
-            script.async = true;
-            script.src = path;
-            document.body.appendChild(script);
-        }
+
+        var script = document.createElement('link');
+        script.id = name;
+        script.href = path;
+        script.rel = "prefetch";
+        document.body.appendChild(script);
     }
 }`;
 }

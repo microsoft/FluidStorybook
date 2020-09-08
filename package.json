@@ -7,7 +7,8 @@
     "start": "start-storybook -p 9009 -s public",
     "start:server": "tinylicious",
     "build": "build-storybook -s public",
-    "build:hugo": "build-storybook -s public && node hugo-build-script.js"
+    "build:hugo": "build-storybook -s public && npm run hugo",
+    "hugo": "node hugo-build-script.js"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.31.0",

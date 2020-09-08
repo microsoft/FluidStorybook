@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import { addons, makeDecorator } from '@storybook/addons'
 
 export default makeDecorator({

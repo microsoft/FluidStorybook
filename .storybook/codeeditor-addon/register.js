@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import { addons, types } from '@storybook/addons';
 import Panel from './storybookPanel';
 import React from 'react';

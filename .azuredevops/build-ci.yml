@@ -31,6 +31,13 @@ steps:
     command: 'custom'
     customCommand: 'install'
 
+# Remove Policy Check until folder issue is resolved
+# - task: Npm@1
+#   displayName: Policy Check
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run policy-check'
+
 - task: Npm@1
   displayName: Build
   inputs:

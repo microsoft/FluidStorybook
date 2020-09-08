@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import React, { useCallback } from 'react';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';

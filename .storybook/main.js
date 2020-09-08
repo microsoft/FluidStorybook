@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 const SourcePlugin = require('./sourcecode-addon/webpackPlugin');
 const path = require('path');
 

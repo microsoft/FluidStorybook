@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 const fs = require('fs');
 const inputPath = __dirname + '/storybook-static/index.html';
 const iFramePath = __dirname + '/storybook-static/iframe.html';

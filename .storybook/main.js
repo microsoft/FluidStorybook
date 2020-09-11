@@ -13,6 +13,13 @@ module.exports = {
     '@storybook/addon-docs', // Enables MDX
     './sourcecode-addon/register'
   ],
+  webpack: async (baseConfig, options) => {
+    const isProd = options.configType === "PRODUCTION";
+    baseConfig.mode = options.configType.toLowerCase();
+    baseConfig.optimization.minimize = isProd;
+    baseConfig.devtool = isProd ? undefined : "inline-source-map";
+    return baseConfig;
+  },
   webpackFinal: async (config) => {
     // Used by sourcecode-addon. Add loader that registers raw source code in a cache and display it in the Source tab.'
     config.module.rules.push({
@@ -43,12 +50,6 @@ module.exports = {
 
     // Used by sourcecode-addon. Add plugin that collects the source code.
     config.plugins.push(new SourcePlugin());
-
-    // prevent filename mangling (which b0rks source file switching)
-    config.mode = 'development';
-
-    // prevent minification
-    config.optimization.minimizer = [];
 
     return config;
   }

@@ -57,7 +57,7 @@ const SourceCodePanel = props => {
           const filteredPaths = Object.keys(rawSources).filter((file, index) => {
             // Grab first part of path
             let firstOfPath = path.split('/').slice(2, 4).join('/').toLowerCase();
-            return file.toLowerCase().startsWith(firstOfPath);
+            return file.toLowerCase().startsWith(firstOfPath + '/');
           });
           setFilteredFiles(filteredPaths);
         }

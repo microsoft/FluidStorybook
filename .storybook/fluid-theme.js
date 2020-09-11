@@ -33,6 +33,6 @@ export default create({
   inputBorderRadius: 4,
 
   brandTitle: 'Fluid Playground',
-  brandUrl: 'https://www.fluidframework.com/',
+  brandUrl: 'https://www.fluidframework.com/playground',
   brandImage: '',
 });

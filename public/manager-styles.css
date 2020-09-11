@@ -108,3 +108,25 @@ button[title="Clear search"], button[title="Clear search"]:hover {
 #docs-root[hidden] {
   display: none !important;
 }
+
+/* 
+ **
+ ** Following styles are to resolve style issues when rendered inside of fluidframework.com 
+ **   
+*/
+
+/* move scroll into playground area */
+html {
+    overflow-y: hidden;
+}
+
+/* body is overflow hidden, so it needs to fill the entire screen height */
+body {
+    height: 100vh;
+}
+
+/* When storybook is rendered in fluidframework.com the #root's first div child has 100vh height, 
+which is too tall due to the 50px header and 90px footer (50 + 90 = 140) */
+#main #root>div {
+    height: calc(100vh - 140px);
+}

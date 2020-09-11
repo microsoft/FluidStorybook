@@ -99,9 +99,6 @@ button[title="Clear search"], button[title="Clear search"]:hover {
     background: transparent;
 }
 
-#root {
-    min-height: calc(100vh + 150px)
-}
 
 /* Pulled from Storybook's build version of index.html - needed for Hugo <link> embed */
 #root[hidden],
@@ -115,18 +112,27 @@ button[title="Clear search"], button[title="Clear search"]:hover {
  **   
 */
 
-/* move scroll into playground area */
-html {
-    overflow-y: hidden !important;
+/* pushes playground canvas to fill the screen on mobile devices */
+@media (max-width: 599px) {
+    #root {
+        min-height: calc(100vh + 150px)
+    }
 }
 
-/* body is overflow hidden, so it needs to fill the entire screen height */
-body {
-    height: 100vh;
-}
+/* move scroll into playground area on desktop devices */
+@media (min-width: 600px) {
+    html {
+        overflow-y: hidden !important;
+    }
 
-/* When storybook is rendered in fluidframework.com the #root's first div child has 100vh height, 
-which is too tall due to the 50px header and 90px footer (50 + 90 = 140) */
-#main #root>div {
-    height: calc(100vh - 140px);
+    /* body is overflow hidden, so it needs to fill the entire screen height */
+    body {
+        height: 100vh;
+    }
+
+    /* When storybook is rendered in fluidframework.com the #root's first div child has 100vh height, 
+    which is too tall due to the 50px header and 90px footer (50 + 90 = 140) */
+    #main #root>div {
+        height: calc(100vh - 140px);
+    }
 }

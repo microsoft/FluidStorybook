@@ -13,7 +13,7 @@
     "hugo": "node hugo-build-script.js",
     "policy-check": "fluid-repo-policy-check",
     "policy-check:fix": "fluid-repo-policy-check -r",
-    "start": "npm run build:srcviewer && start-storybook -p 9009 -s public",
+    "start": "start-storybook -p 9009 -s public",
     "start:server": "tinylicious"
   },
   "browserslist": {
@@ -98,6 +98,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-image-gallery": "^1.0.0",
     "@types/sudokus": "^1.0.0",
+    "hook-shell-script-webpack-plugin": "^0.1.3",
     "html-webpack-plugin": "^4.3.0",
     "node-sass": "^4.14.1",
     "tinylicious": "^0.2.3471",

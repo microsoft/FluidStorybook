@@ -11,6 +11,7 @@
 # production
 /build
 /storybook-static
+/public/rawSources.json
 
 # misc
 .DS_Store

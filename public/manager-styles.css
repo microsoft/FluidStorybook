@@ -117,7 +117,7 @@ button[title="Clear search"], button[title="Clear search"]:hover {
 
 /* move scroll into playground area */
 html {
-    overflow-y: hidden;
+    overflow-y: hidden !important;
 }
 
 /* body is overflow hidden, so it needs to fill the entire screen height */

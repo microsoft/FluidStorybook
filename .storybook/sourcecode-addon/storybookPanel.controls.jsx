@@ -46,7 +46,7 @@ const SourceCodePanelControls = props => {
       const currentlySelected = filePath === option
       return (
         <MenuItem
-          className={`${Classes.TEXT_SMALL} Editor_Menu_Item`}
+          className={`${Classes.TEXT_MEDIUM} Editor_Menu_Item`}
           key={option}
           icon={
             <Icon icon={currentlySelected ? 'tick' : 'blank'} iconSize={12} />

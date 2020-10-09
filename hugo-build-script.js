@@ -122,7 +122,6 @@ function createHugoTemplate(stylesheetLinks, bodyContent) {
 ${stylesheetLinks}
 ${bodyContent}
 {{ block "footer" . -}}{{ end }}
-{{- partial "analytics.html" . }}
 {{- if templates.Exists "partials/extra-foot.html" -}}
 {{ partial "extra-foot.html" . }}
 {{- end }}

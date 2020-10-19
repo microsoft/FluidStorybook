@@ -9,7 +9,7 @@ import path from 'path';
 import SourceCodePanelControls from './storybookPanel.controls';
 
 const SourceCodePanel = props => {
-  const { channel, rawSources: rawSourcesFromProps } = props;
+  const { channel, rawSources: rawSourcesFromProps, storybookAPI: api } = props;
   const [fileState, setFileState] = useState({ history: [], idx: 0 });
   const [filteredFiles, setFilteredFiles] = useState([]);
   const filePath = fileState.history[fileState.idx] || '';
@@ -34,6 +34,13 @@ const SourceCodePanel = props => {
   }
 
   const handleToggleCompiled = () => setShowCompiled(!showCompiled);
+
+// Update page title on load or tab change
+  useEffect(() => {
+    const title = api.getCurrentStoryData()?.kind + ' ' + api.getUrlState()?.viewMode
+    
+    document.title = title;
+  })
 
   useEffect(() => {
     const onRawSources = newRawSources => {

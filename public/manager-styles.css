@@ -136,3 +136,21 @@ button[title="Clear search"], button[title="Clear search"]:hover {
         height: calc(100vh - 140px);
     }
 }
+
+
+/* Fixing https://github.com/microsoft/FluidFramework/issues/3815 */
+.sidebar-container .sidebar-subheading {
+    color: #ffffff90
+}
+
+/* Selected sidebar item contrast ration is not high enough */
+.sidebar-container .sidebar-item.selected {
+    background: #027ac5;
+}
+
+/* sidebar-items should inherit parent hover color, instead of using default anchor colors */
+.sidebar-item:hover {
+    color: inherit;
+}
+
+/* end 3815 fixes */

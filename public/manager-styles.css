@@ -145,12 +145,18 @@ button[title="Clear search"], button[title="Clear search"]:hover {
 
 /* Selected sidebar item contrast ration is not high enough */
 .sidebar-container .sidebar-item.selected {
-    background: #027ac5;
+    background: #0078d4;
 }
 
 /* sidebar-items should inherit parent hover color, instead of using default anchor colors */
 .sidebar-item:hover {
     color: inherit;
+}
+
+/* Top navigation contrast ratio is too low on hover with dark background. Color matches selected theme color */
+a[href^="/?path=/"]:hover {
+    color: #6eb2ed;
+    text-decoration: none;
 }
 
 /* end 3815 fixes */

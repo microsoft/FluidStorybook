@@ -15,6 +15,10 @@ div.sbdocs, p.sbdocs, li.sbdocs, p.sbdocs > code, a.sbdocs {
     font-size: 14pt;
 }
 
+a.sbdocs {
+    color: #0078d4;
+}
+
 div.sbdocs-wrapper {
     padding: 2rem 20px;
 }
@@ -105,7 +109,7 @@ div.sbdocs-content {
 }
 
 .browser div.header span.title .scheme {
-    color: #7ed321;
+    color: #458400;
     font-size: 11px;
 }
 

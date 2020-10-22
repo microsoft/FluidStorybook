@@ -37,7 +37,7 @@ const SourceCodePanel = props => {
 
 // Update page title on load or tab change
   useEffect(() => {
-    const title = api.getCurrentStoryData()?.kind + ' ' + api.getUrlState()?.viewMode
+    const title = `${api.getCurrentStoryData()?.kind} ${api.getUrlState()?.viewMode}`;
     
     document.title = title;
   })

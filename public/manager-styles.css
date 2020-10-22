@@ -138,25 +138,24 @@ button[title="Clear search"], button[title="Clear search"]:hover {
 }
 
 
-/* Fixing https://github.com/microsoft/FluidFramework/issues/3815 */
-.sidebar-container .sidebar-subheading {
-    color: #ffffff90
-}
+/* Following CSS addresses https://github.com/microsoft/FluidFramework/issues/3815 */
+    .sidebar-container .sidebar-subheading {
+        color: #ffffff90
+    }
 
-/* Selected sidebar item contrast ration is not high enough */
-.sidebar-container .sidebar-item.selected {
-    background: #0078d4;
-}
+    /* Selected sidebar item contrast ration is not high enough */
+    .sidebar-container .sidebar-item.selected {
+        background: #0078d4;
+    }
 
-/* sidebar-items should inherit parent hover color, instead of using default anchor colors */
-.sidebar-item:hover {
-    color: inherit;
-}
+    /* sidebar-items should inherit parent hover color, instead of using default anchor colors */
+    .sidebar-item:hover {
+        color: inherit;
+    }
 
-/* Top navigation contrast ratio is too low on hover with dark background. Color matches selected theme color */
-a[href^="/?path=/"]:hover {
-    color: #6eb2ed;
-    text-decoration: none;
-}
-
+    /* Top navigation contrast ratio is too low on hover with dark background. Color matches selected theme color */
+    a[href^="/?path=/"]:hover {
+        color: #6eb2ed;
+        text-decoration: none;
+    }
 /* end 3815 fixes */

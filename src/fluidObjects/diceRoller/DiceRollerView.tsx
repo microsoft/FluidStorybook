@@ -18,7 +18,7 @@ interface IAppProps {
  */
 export const DiceRollerView = (props: IAppProps) => {
     const [diceValue, setDiceValue] = React.useState(props.model.value);
-    console.log(props)
+
     // Setup a listener that 
     React.useEffect(() => {
         const onDiceRolled = () => {

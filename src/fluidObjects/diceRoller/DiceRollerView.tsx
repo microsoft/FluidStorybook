@@ -9,6 +9,7 @@ import { DiceRoller } from "./DiceRoller";
 
 interface IAppProps {
     model: DiceRoller;
+    sbs: "left" | "right" // is display rendered left or right side
 }
 
 /**
@@ -17,7 +18,7 @@ interface IAppProps {
  */
 export const DiceRollerView = (props: IAppProps) => {
     const [diceValue, setDiceValue] = React.useState(props.model.value);
-
+    console.log(props)
     // Setup a listener that 
     React.useEffect(() => {
         const onDiceRolled = () => {
@@ -29,20 +30,16 @@ export const DiceRollerView = (props: IAppProps) => {
             // When the view dismounts remove the listener to avoid memory leaks
             props.model.off("diceRolled", onDiceRolled);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [diceValue]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props]);
 
     // Unicode 0x2680-0x2685 are the sides of a dice (⚀⚁⚂⚃⚄⚅)
     const diceChar = String.fromCodePoint(0x267F + diceValue);
     const diceColor = `hsl(${diceValue * 60}, 70%, 50%)`;
 
-    // Set the Tab Title to the dice char because it's cool,
-    // and it makes testing with multiple tabs easier
-    document.title = `${diceChar} - ${props.model.id}`;
-
     return (
         <div>
-            <div style={{ fontSize: 200, color: diceColor }}>{diceChar}</div>
+            <div aria-live='polite' aria-label={`${props.sbs} dice value is ${diceValue}`} style={{ fontSize: 200, color: diceColor }}><span aria-hidden="true">{diceChar}</span></div>
             <button style={{ fontSize: 50, marginLeft: 10 }} onClick={props.model.roll}>Roll</button>
         </div>
     );

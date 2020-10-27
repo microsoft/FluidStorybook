@@ -8,50 +8,50 @@
  * The App uses the provided model to interact with Fluid.
  */
 
-export function DiceRollerView(model, contentDiv) {
-    let diceChar = null;
-    let diceColor = null;
-    let diceRollerDiv = null;
+export function DiceRollerView(model, contentDiv, side) {
+  let diceChar = null;
+  let diceColor = null;
+  let diceRollerDiv = null;
 
-    const onDiceRolled = () => {
-        const diceValue = model.value;
-        // Unicode 0x2680-0x2685 are the sides of a dice (⚀⚁⚂⚃⚄⚅)
-        diceChar = String.fromCodePoint(0x267F + diceValue);
-        diceColor = `hsl(${diceValue * 60}, 70%, 50%)`;
-        updateDOM();
-    };
+  const onDiceRolled = () => {
+    const diceValue = model.value;
+    // Unicode 0x2680-0x2685 are the sides of a dice (⚀⚁⚂⚃⚄⚅)
+    diceChar = String.fromCodePoint(0x267f + diceValue);
+    diceColor = `hsl(${diceValue * 60}, 70%, 50%)`;
+    updateDOM();
+  };
 
-    const updateDOM = () => {
-        document.title = `${diceChar} - ${model.id}`;
-        // <h1>ID: ${model.id}</h1>
-        let html = `
-            <div style="font-size: 200px; color: ${diceColor}">${diceChar}</div>
+  const updateDOM = () => {
+    document.title = `${diceChar} - ${model.id}`;
+    // <h1>ID: ${model.id}</h1>
+    let html = `
+            <div aria-live='polite' aria-label='${side} dice value is ${model.value}' style="font-size: 200px; color: ${diceColor}">
+                <span aria-hidden='true'>${diceChar}</span>
+            </div>
         `;
-        diceRollerDiv.innerHTML = html;
-    }     
+    diceRollerDiv.innerHTML = html;
+  };
 
-    const render = () => {
-        diceRollerDiv = document.createElement('div');
-        contentDiv.appendChild(diceRollerDiv);
-        contentDiv.appendChild(createButton());
-        // Listen for changes to DiceRoller values
-        model.on("diceRolled", onDiceRolled);
-        // Render initial dice value.
-        onDiceRolled();
-    }
+  const render = () => {
+    diceRollerDiv = document.createElement("div");
+    contentDiv.appendChild(diceRollerDiv);
+    contentDiv.appendChild(createButton());
+    // Listen for changes to DiceRoller values
+    model.on("diceRolled", onDiceRolled);
+    // Render initial dice value.
+    onDiceRolled();
+  };
 
-    const createButton = () => {
-        let button = document.createElement("button");
-        button.style.fontSize = "50px";
-        button.style.marginLeft = "10px";
-        button.innerText = "Roll";
-        button.addEventListener('click', () => model.roll());
-        return button;
-    }
+  const createButton = () => {
+    let button = document.createElement("button");
+    button.style.fontSize = "50px";
+    button.style.marginLeft = "10px";
+    button.innerText = "Roll";
+    button.addEventListener("click", () => model.roll());
+    return button;
+  };
 
-    return {
-        render
-    };
+  return { render };
 }
 
 // DOM class example (if preferred over functions)
@@ -89,7 +89,7 @@ export function DiceRollerView(model, contentDiv) {
 //             <div style="font-size: 200px; color: ${this.diceColor}">${this.diceChar}</div>
 //         `;
 //         this.diceRollerDiv.innerHTML = html;
-//     }     
+//     }
 
 //     createButton() {
 //         let button = document.createElement("button");

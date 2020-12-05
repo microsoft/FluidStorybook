@@ -106,10 +106,10 @@ button[title="Clear search"], button[title="Clear search"]:hover {
   display: none !important;
 }
 
-/* 
+/*
  **
- ** Following styles are to resolve style issues when rendered inside of fluidframework.com 
- **   
+ ** Following styles are to resolve style issues when rendered inside of fluidframework.com
+ **
 */
 
 /* pushes playground canvas to fill the screen on mobile devices */
@@ -130,7 +130,7 @@ button[title="Clear search"], button[title="Clear search"]:hover {
         height: 100vh;
     }
 
-    /* When storybook is rendered in fluidframework.com the #root's first div child has 100vh height, 
+    /* When storybook is rendered in fluidframework.com the #root's first div child has 100vh height,
     which is too tall due to the 50px header and 90px footer (50 + 90 = 140) */
     #main #root>div {
         height: calc(100vh - 140px);
@@ -159,3 +159,8 @@ button[title="Clear search"], button[title="Clear search"]:hover {
         text-decoration: none;
     }
 /* end 3815 fixes */
+
+/* Fixes https://github.com/microsoft/FluidFramework/issues/4522 where scroll color isn't responding to dark theme */
+.os-theme-dark .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+    background: white;
+}

@@ -17,7 +17,7 @@ export async function renderFluidDataObjects(
         // Create container div that Fluid object will be rendered into for server demos
         return await renderFluidObjectsDivs(props, dataObject1, dataObject2, resolve);
     });
-    
+
 }
 
 async function renderFluidObjectsDivs(
@@ -54,9 +54,9 @@ async function createDomView(
     resolve: any,
 ) {
     // Create side by side view of Fluid object for local demos
-    let leftFluidObject = new props.view(dataObject1, divs.div1);
+    let leftFluidObject = new props.view(dataObject1, divs.div1, 'Left');
     leftFluidObject.render();
-    let rightFluidObject = new props.view(dataObject2, divs.div2);
+    let rightFluidObject = new props.view(dataObject2, divs.div2, 'Right');
     rightFluidObject.render();
     return resolve(divs.containerDiv);
 }
@@ -67,8 +67,8 @@ async function createReactView(props: FluidLoaderProps,
     divs: any,
     resolve: any,
 ) {
-    ReactDOM.render(<props.view model={dataObject1} {...props} />, divs.div1);
-    ReactDOM.render(<props.view model={dataObject2} {...props} />, divs.div2);
+    ReactDOM.render(<props.view model={dataObject1} {...props} sbs="left" />, divs.div1);
+    ReactDOM.render(<props.view model={dataObject2} {...props} sbs="right" />, divs.div2);
     return resolve(divs.containerDiv);
 }
 
@@ -92,7 +92,7 @@ export function getDivs(layout: string) {
     const div1 = div1Container.querySelector(".browser .body");
     const div2Container = makeBrowserShellDiv("sbs-right", layout);
     const div2 = div2Container.querySelector(".browser .body");
-    
+
     if (layout === 'vertical') {
         const br = document.createElement('br');
         containerDiv.append(div1Container, br, div2Container);
@@ -107,8 +107,8 @@ export function getDivs(layout: string) {
 
 function makeBrowserShellDiv(divId: string, layout: string) {
     const isWindows = navigator.platform.indexOf('Win') > -1;
-    const macControls = (isWindows) ? 'none': 'inline-block';
-    const windowsControls = (isWindows) ? 'inline-block': 'none';
+    const macControls = (isWindows) ? 'none' : 'inline-block';
+    const windowsControls = (isWindows) ? 'inline-block' : 'none';
     const html = `
     <div class="window browser">
         <div class="header">

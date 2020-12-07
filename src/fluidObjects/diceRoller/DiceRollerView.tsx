@@ -9,7 +9,7 @@ import { DiceRoller } from "./DiceRoller";
 
 interface IAppProps {
     model: DiceRoller;
-    sbs: "left" | "right" // is display rendered left or right side
+    sbs?: "left" | "right" // is display rendered left or right side
 }
 
 /**
@@ -39,7 +39,7 @@ export const DiceRollerView = (props: IAppProps) => {
 
     return (
         <div>
-            <div aria-live='polite' aria-label={`${props.sbs} dice value is ${diceValue}`} style={{ fontSize: 200, color: diceColor }}><span aria-hidden="true">{diceChar}</span></div>
+            <div aria-live='polite' aria-label={`${props.sbs || ''} dice value is ${diceValue}`} style={{ fontSize: 200, color: diceColor }}><span aria-hidden="true">{diceChar}</span></div>
             <button style={{ fontSize: 50, marginLeft: 10 }} onClick={props.model.roll}>Roll</button>
         </div>
     );

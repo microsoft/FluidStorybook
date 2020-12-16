@@ -144,7 +144,8 @@ button[title="Clear search"], button[title="Clear search"]:hover {
     }
 
     /* Selected sidebar item contrast ration is not high enough */
-    .sidebar-container .sidebar-item.selected {
+    .sidebar-container .sidebar-item.selected,
+    .sidebar-container .sidebar-item[data-selected="true"] {
         background: #0078d4;
     }
 

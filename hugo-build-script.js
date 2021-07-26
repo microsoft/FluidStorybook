@@ -111,9 +111,8 @@ function createHugoTemplate(stylesheetLinks, bodyContent) {
     return `{{ define "header" }}
 {{ partial "header.html" . }}
 {{ end }}
-     
+
 {{ define "main" }}
-{{ partial "navbarSticky.html" . }}
 <script>
   var base = document.createElement('base');
   base.href = '/playground/';
@@ -125,7 +124,7 @@ ${bodyContent}
 {{- if templates.Exists "partials/extra-foot.html" -}}
 {{ partial "extra-foot.html" . }}
 {{- end }}
- 
+
 {{ end }}`;
 }
 

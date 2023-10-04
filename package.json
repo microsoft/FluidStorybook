@@ -79,7 +79,7 @@
     "react-dom": "^16.13.1",
     "react-image-gallery": "^1.0.8",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^13.3.1",
     "sudokus": "^1.0.2",
     "uuid": "^8.3.0"
@@ -87,10 +87,10 @@
   "devDependencies": {
     "@fluidframework/build-common": "^0.19.2-2664",
     "@fluidframework/build-tools": "^0.2.3049",
-    "@storybook/addon-docs": "^6.2.9",
+    "@storybook/addon-docs": "^6.5.16",
     "@storybook/addons": "^6.2.9",
     "@storybook/preset-create-react-app": "^3.1.7",
-    "@storybook/react": "^6.2.9",
+    "@storybook/react": "^7.4.6",
     "@storybook/theming": "^6.2.9",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.47",

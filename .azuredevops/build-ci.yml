@@ -42,9 +42,9 @@ extends:
     customBuildTags:
       - ES365AIMigrationTooling
     stages:
-      - stage: stage
+      - stage: Run_build
         jobs:
-          - job: job
+          - job: Run_build
             steps:
               - task: ComponentGovernanceComponentDetection@0
                 inputs:

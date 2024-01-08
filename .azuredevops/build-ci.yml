@@ -25,7 +25,7 @@ extends:
   template: v1/M365.Official.PipelineTemplate.yml@m365Pipelines
   parameters:
     pool:
-      name: NewLarge-linux-1ES # This is one of the Fluid Orgs new 1ES hosted pools.
+      name: Small-1ES # This is one of the Fluid Orgs new 1ES hosted pools.
       os: linux
     sdl:
       arrow:
